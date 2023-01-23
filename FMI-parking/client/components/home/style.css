@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Open Sans", sans-serif;
     margin: 0;
@@ -33,3 +38,108 @@ a:hover {
     display: inline-block;
     margin: 1.4em 1em 1em 1em;
 }
+
+.logo-background {
+    margin-top: -1px;
+    width: 100%;
+    background-color: #1abc9c;
+    height: 70%;
+}
+
+.logo-background h1 {
+    font-size: 70px;
+    font-weight: bold;
+    font-family: Miranda, Miranda, cursive;
+    color: white;
+    text-align: center;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box-wrapper {
+    height: 95vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.services {
+    padding: 10px;
+    margin-left: 10%;
+    margin-right: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.service-txt {
+    font-size: 25px;
+    font-family: Miranda, Miranda, cursive;
+    padding-top: 30%;
+    padding-left: 5%;
+}
+
+.service-box {
+    /*flex-grow: 2;*/
+    width: 400px;
+    height: 400px;
+    margin: 3.5%;
+    /* dashed border */
+    /*background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='30' ry='30' stroke='black' stroke-width='4' stroke-dasharray='15%2c 15%2c 1' stroke-dashoffset='42' stroke-linecap='square'/%3e%3c/svg%3e");*/
+    border-radius: 30px;
+    border-style: dashed;
+    border-width: thick;
+    border-color: #2c3e50;
+    color: #2c3e50;
+}
+
+.service-box:hover {
+    color: white;
+    background-color: #1abc9c;
+}
+
+.for-us h1 {
+    color: #2c3e50;
+    text-align: center;
+    font-size: 50px;
+}
+
+.for-us-content {
+    height: 95vh;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    padding: 2%;
+    margin: 2%;
+}
+
+.for-us-column {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.for-us-column div {
+    flex-grow: 1;
+}
+
+.site-footer {
+    width: 100%;
+    background-color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+}
+
+.site-footer h3 {
+    margin-left: 20px;
+}
+
+.contact-icons {
+    padding-top: 8px;
+}
+
