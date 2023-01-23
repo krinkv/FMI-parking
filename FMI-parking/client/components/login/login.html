@@ -1,52 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/login_style.css">
-    <script defer src="javascript/login.js"></script>
-    <title>Login</title>
-</head>
-<body>
-    <main>
-        <!-- log in page header -->
-        <header>
-            <h1 id="system-name-header">Вход във ФМИ паркинг</h1>
-        </header>
-
-        <!-- log in form -->
-        <div class="container">
-            <div class="inputs">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/login_style.css">
+        <script defer src="javascript/login.js"></script>
+        <title>Login</title>
+    </head>
+    <body>
+        <div class="container" id="container">
+            <div class="form-container left-container">
                 <form id="login-form">
-
-                    <!-- email -->
-                    <div class="form-item">
-                        <label for="email"><span>Имейл:</span></label>
-                        <input type="email" placeholder="въведете имейл" required name="email" id="email">
-                    </div>
-
-                    <!-- password -->
-                    <div class="form-item">
-                        <label for="password"><span>Парола:</span></label>
-                        <input type="password" placeholder="въведете парола" required name="password" id="password">
-                    </div>
-
-                    <!-- submit button -->
-                    <div class="form-item button-container">
-                        <button type="submit" id="login-button">Вход</button>
-                    </div>
-
-                    <!-- response when a field was incorrect -->
+                    <h1>Вход в системата</h1>
+                    <input type="text" placeholder="Потребителско име" required name="username-login" id="email">
+                    <input type="password" placeholder="Парола" required name="password-login" id="password">
+                    <button type="submit" id="login-button" onclick="login()">Вход</button>
                     <div class="form-item no-show" id="response-message">
                     </div>
                 </form>
             </div>
+            <div class="overlay-container">
+                <img src="../../resources/logo.png" alt="Parking system logo">
+            </div>
         </div>
-
-        <!-- button for redirection over to the registration page in case the user doesn't have account -->
-        <button type="submit" id="to-registration-btn">Регистрация</button>
-    </main>
-</body>
+    </body>
 </html>
-
