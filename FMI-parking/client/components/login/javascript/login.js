@@ -33,8 +33,8 @@ function login() {
             })
     })
 };
-
-/* sends the inputted data over to the backend to authenticate the user */
+  
+  /* sends the inputted data over to the backend to authenticate the user */
 function checkLoginData(data) {
     return fetch("../../backend/api/login/login_user.php", {
         method: "POST",
