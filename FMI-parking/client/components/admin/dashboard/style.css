@@ -1,5 +1,10 @@
 .navigation {
     height: 100%;
+    position: fixed;
+}
+
+.object-class {
+    height: 100%;
 }
 
 .content {
