@@ -1,73 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/form_styles.css">
-    <script defer src="javascript/send_form.js"></script>
-    <title>Register</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/register.css">
+  <script defer src="javascript/register.js"></script>
+  <title>Register</title>
 </head>
+
 <body>
-    <main>
+    <div class="container" id="container">
+        <div class="form-container left-container">
+            <img src="../../resources/logo.png" alt="Parking system logo">
+        </div>
+        <div class="overlay-container">
+            <form id="registration-form">
+                <h1>Създай акаунт</h1>
 
-        <!-- Registration page header -->
-        <header>
-            <h1 id="system-name-header">Система за паркиране във ФМИ</h1>
-        </header>
+                <div class="wrapper">
+                <!-- first name -->
+                <input type="text" placeholder="Име" autocomplete="off" required name="firstname" id="firstname">
 
-        <!-- Registration form -->
-        <form id="registration-form">
+                <!-- last name -->
+                <input type="text" placeholder="Фамилия" autocomplete="off" required name="lastname" id="lastname">
+              </div>
 
-            <!-- First name -->
-            <div class="form-item">
-                <label for="firstname"><span>Име:</span></label>
-                <input type="text" placeholder="Въведете име" autocomplete="off" required name="firstname" id="firstname">
-            </div>
-
-            <!-- Family name -->
-            <div class="form-item">
-                <label for="lastname"><span>Фамилия:</span></label>
-                <input type="text" placeholder="Въведете фамилия" autocomplete="off" required name="lastname" id="lastname">
-            </div>
-
-            <!-- E-mail -->
-            <div class="form-item">
-                <label for="email"><span>Имейл:</span></label>
-                <input type="email" placeholder="Въведете имейл" required name="email" id="email">
-            </div>
-
-            <!-- Password -->
-            <div class="form-item">
-                <label for="password"><span>Парола:</span></label>
-                <input type="password" placeholder="Въведете парола" required name="password" id="password">
-            </div>
-
-            <!-- Repeated password -->
-            <div class="form-item">
-                <label for="repeat-password"><span>Повторете паролата:</span></label>
-                <input type="password" placeholder="Повторете паролата" required name="repeat_password" id="repeat-password">
-            </div>
-
-            <!-- User type -->
-            <div class="form-item">
-                <label for="user-type"><span>Тип:</span></label>
-                <select name="user_type" id="user-type">
-                    <option value="Щатен преподавател">Щатен преподавател</option>
-                    <option value="Хоноруван преподавател">Хоноруван преподавател</option>
-                    <option value="Студент">Студент</option>
+              <div class="wrapper">
+                <!-- user sex -->
+                <select name="sex" id="sex" class="custom-select">
+                  <option value="M">Мъж</option>
+                  <option value="F">Жена</option>
                 </select>
-            </div>
 
-            <!-- Submit button -->
-            <div class="form-item button-container">
-                <button type="submit" id="register-button">Регистриране</button>
-            </div>
+                <!-- car number -->
+                <input type="text" placeholder="Номер на кола" autocomplete="off" required name="car_number" id="car_number">
+              </div>
 
-            <!-- Response message -->
-            <div class="form-item no-display" id="response-message">
-            </div>
-        </form>
-    </main>
+                <!-- email -->
+                <input type="email" placeholder="Имейл" required name="email-register" id="email">
+
+                <!-- password -->
+                <input type="password" placeholder="Парола" required name="password-register" id="password">
+
+                <!-- repeat password -->
+                <input type="password" placeholder="Повторете паролата" required name="repeat_password" id="repeat-password">
+
+                <!-- user type -->
+                <select name="user_type" id="user-type" class="custom-select">
+                  <option value="Щатен преподавател">Щатен преподавател</option>
+                  <option value="Хоноруван преподавател">Хоноруван преподавател</option>
+                  <option value="Студент">Студент</option>
+                </select>
+
+                <!-- submit button -->
+                <button type="submit" id="register-button" onclick="register()">Регистриране</button>
+
+                <!-- response when a field was incorrect -->
+                <div class="form-item no-show" id="response-message-register">
+                </div>
+              </form>
+        </div>
+    </div>
 </body>
+
 </html>
