@@ -1,3 +1,9 @@
+const toRegistrationBtn = document.getElementById("login-button"); // button, redirecting to the registration page
+
+toRegistrationBtn.addEventListener('click', () => {
+    window.location.href = "../admin/dashboard/dashboard.html"; // redirect the user over to the registration page with an option to go back from the browser
+});
+
 function login() {
     const inputs = document.querySelectorAll("input"); // all input fields from login form
     const form = document.getElementById("login-form"); // the login form
