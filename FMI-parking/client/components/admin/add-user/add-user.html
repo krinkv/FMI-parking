@@ -10,12 +10,61 @@
   <title>Register</title>
 </head>
 <body>
-<div class="navigation">
-    <object class="object-class" type="text/html" data="../../sidebar/sidebar.html"></object>
-    <link rel="stylesheet" type="text/css" href="../../sidebar/style.css">
-    <!--    <script src="../../sidebar/sidebar.js"></script>-->
+<div>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <script src="sidebar.js"></script>
+    <nav class="main-menu">
+        <h2 class="admin-title">АДМИН</h2>
+        <ul>
+            <li class="has-subnav" id="dashboard">
+                <a href="../dashboard/dashboard.html" class="menu-element">
+                    <i class="fa fa-solid fa-table"></i>
+                    <p class="nav-text">Табло</p>
+                </a>
+
+            </li>
+            <li class="has-subnav" id="calendar">
+                <a href="#" class="menu-element">
+                    <i class="fa fa-solid fa-calendar"></i>
+                    <p class="nav-text">Календар</p>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="#" class="menu-element">
+                    <i class="fa fa-solid fa-file fa-2x"></i>
+                    <p class="nav-text">Доклад</p>
+                </a>
+            </li>
+            <li class="has-subnav" id="add-user">
+                <a href="add-user.html" class="to-add-user">
+                    <i class="fa fa-solid fa-user"></i>
+                    <p class="nav-text">Добави потребител</p>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="#" class="menu-element">
+                    <i class="fa fa-thin fa-exclamation"></i>
+                    <p class="nav-text">Наказания</p>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="#" class="menu-element">
+                    <i class="fa fa-solid fa-eye"></i>
+                    <p class="nav-text">Търси</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <p class="nav-text">Изход</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
-    <div class="container" id="container">
+
+<div class="container" id="container">
         <div class="form-container left-container">
             <img src="../../../resources/logo.png" alt="Parking system logo">
         </div>
