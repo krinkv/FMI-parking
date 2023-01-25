@@ -1,28 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="css/login_style.css">
-        <script defer src="javascript/login.js"></script>
-        <title>Login</title>
-    </head>
-    <body>
-        <div class="container" id="container">
-            <div class="form-container left-container">
-                <form id="login-form">
-                    <h1>Вход в системата</h1>
-                    <input type="text" placeholder="Потребителско име" required name="username-login" id="email">
-                    <input type="password" placeholder="Парола" required name="password-login" id="password">
-                    <button type="submit" id="login-button" onclick="login()">Вход</button>
-                    <div class="form-item no-show" id="response-message">
-                    </div>
-                </form>
+<div class="container" id="container">
+    <div class="form-container left-container">
+        <form id="login-form">
+            <h1>Вход в системата</h1>
+            <input type="text" placeholder="Потребителско име" required name="username-login" id="email">
+            <input type="password" placeholder="Парола" required name="password-login" id="password">
+            <button type="submit" id="login-button" onclick="login()">Вход</button>
+            <div class="form-item no-show" id="response-message">
             </div>
-            <div class="overlay-container">
-                <img src="../../resources/logo.png" alt="Parking system logo">
-            </div>
-        </div>
-    </body>
-</html>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <img src="./resources/logo.png" alt="Parking system logo">
+    </div>
+</div>
