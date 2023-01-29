@@ -1,4 +1,4 @@
-function register() {
+function addUser() {
 
     const form = document.getElementById("registration-form"); // the registration form
     const inputs = document.querySelectorAll("input, select"); // the input fields and the select one
