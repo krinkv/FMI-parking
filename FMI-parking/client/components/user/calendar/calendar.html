@@ -6,61 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="../user-sidebar/css/user-sidebar.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <title>Календар</title>
 </head>
 <body>
-<div>
-    <meta charset="UTF-8">
-    <nav class="main-menu">
-        <h2 class="admin-title">АДМИН</h2>
-        <ul>
-            <li class="has-subnav" id="dashboard">
-                <a href="#" class="menu-element">
-                    <i class="fa fa-solid fa-table"></i>
-                    <p class="nav-text">Табло</p>
-                </a>
-
-            </li>
-            <li class="has-subnav" id="calendar">
-                <a href="#" class="menu-element">
-                    <i class="fa fa-solid fa-calendar"></i>
-                    <p class="nav-text">Календар</p>
-                </a>
-            </li>
-            <li class="has-subnav">
-                <a href="#" class="menu-element">
-                    <i class="fa fa-solid fa-file fa-2x"></i>
-                    <p class="nav-text">Доклад</p>
-                </a>
-            </li>
-            <li class="has-subnav" id="add-user">
-                <a href="#" class="to-add-user">
-                    <i class="fa fa-solid fa-user"></i>
-                    <p class="nav-text">Добави потребител</p>
-                </a>
-            </li>
-            <li class="has-subnav">
-                <a href="#" class="menu-element">
-                    <i class="fa fa-thin fa-exclamation"></i>
-                    <p class="nav-text">Наказания</p>
-                </a>
-            </li>
-            <li class="has-subnav">
-                <a href="#" class="menu-element">
-                    <i class="fa fa-solid fa-eye"></i>
-                    <p class="nav-text">Търси</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-power-off fa-2x"></i>
-                    <p class="nav-text">Изход</p>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
+<div id="user-sidebar-placeholder"></div>
 <div class="content">
     <div class="calendar">
         <div class="timeline">
@@ -143,7 +94,10 @@
         </div>
     </div>
 </div>
-
 </body>
-
+<script>
+    $(function(){
+        $("#user-sidebar-placeholder").load("../user-sidebar/user-sidebar.html");
+    });
+</script>
 </html>
