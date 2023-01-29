@@ -6,6 +6,7 @@ class DatabaseQueries
 {
     public static function saveUser(User $user)
     {
+        // Validation if there already is such user
         $table = "users";
         $sql = "INSERT INTO $table (first_name, last_name, email, password, status, gender, car_number) 
                         VALUES (:firstname, :lastname, :email, :password, :status, :gender, :carNumber);";
@@ -27,6 +28,20 @@ class DatabaseQueries
         $preparedSql->bindParam(':status', $userStatus);
         $preparedSql->bindParam(':gender', $userGender);
         $preparedSql->bindParam(':carNumber', $userCarNumber);
-        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
+        $preparedSql->execute(); // Think how to handle errors !!!
+    }
+
+    public static function getUserByEmail($email)
+    {
+        $table = "users";
+        $sql = "SELECT * FROM $table WHERE email = :email;";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':email', $email);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $user = $resultSet->fetch(PDO::FETCH_ASSOC);
+
+        return new User($user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
     }
 }
