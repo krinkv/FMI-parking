@@ -4,7 +4,7 @@ $configs = array(
     'host' => 'localhost',
     'username' => 'root',
     'password' => "",
-    'database_name' => "fmi_parking",
+    'database_name' => "parking_system",
 );
 
 function getDatabaseConnection()

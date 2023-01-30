@@ -33,12 +33,12 @@ class DatabaseQueries
 
     public static function getUserByEmail($email)
     {
-        $table = "users";
-        $sql = "SELECT * FROM $table WHERE email = :email;";
+        $table = "user";
+        $sql = "SELECT * FROM $table WHERE `email`=:email";
 
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
-        $resultSet->bindParam(':email', $email);
+        $resultSet->bindValue(':email', $email, PDO::PARAM_STR);
         $resultSet->execute(); // Think how to handle errors !!!
         $user = $resultSet->fetch(PDO::FETCH_ASSOC);
 
