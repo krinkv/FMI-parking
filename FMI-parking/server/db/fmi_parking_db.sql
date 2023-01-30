@@ -36,6 +36,14 @@ CREATE TABLE `course` (
     PRIMARY KEY (course_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+CREATE TABLE `parking_spot` (
+    `parking_spot_id` int NOT NULL AUTO_INCREMENT,
+    `number` int NOT NULL,
+    `sector` VARCHAR(10) NOT NULL,
+    PRIMARY KEY (`parking_spot_id`),
+    UNIQUE(`number`, `zone`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
 CREATE TABLE `users_courses`(
     `course_id` int NOT NULL,
     `user_id` int NOT NULL,
@@ -43,4 +51,15 @@ CREATE TABLE `users_courses`(
     FOREIGN KEY (user_id) REFERENCES `user`(user_id),
     UNIQUE (course_id, user_id)
 );
+
+CREATE TABLE `user_parking_spot_info` (
+    `user_parking_info_id` int NOT NULL AUTO_INCREMENT,
+    `user_id` int NOT NULL,
+    `parking_spot_id` int NOT NULL,
+    `start_time` time NOT NULL,
+    `end_time` time NOT NULL,
+    FOREIGN KEY (parking_spot_id) REFERENCES parking_spot(parking_spot_id),
+    FOREIGN KEY (user_id) REFERENCES `user`(user_id),
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
 COMMIT;
