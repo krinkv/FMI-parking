@@ -72,4 +72,46 @@ class DatabaseQueries
 
         return !empty($user);
     }
+
+    public static function getNumberOfParkingSpots()
+    {
+        $table = "parking_spot";
+        $sql = "SELECT COUNT(*) FROM $table";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $count = $resultSet->fetch(PDO::FETCH_ASSOC);
+
+        return $count["COUNT(*)"];
+    }
+
+    public static function getNumberOfTakenSpotsNow()
+    {
+        $table = "user_parking_spot_info";
+        $sql = "SELECT COUNT(*) FROM $table WHERE start_time <= NOW() AND end_time >= NOW()";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $count = $resultSet->fetch(PDO::FETCH_ASSOC);
+
+        return $count["COUNT(*)"];
+    }
+
+    public static function getNumberOfTakenSpotsNowByUserType($userType)
+    {
+        $table1 = "user_parking_spot_info";
+        $table2 = "user";
+        $sql = "SELECT COUNT(*) FROM user_parking_spot_info t1 JOIN user t2 ON t1.user_id = t2.user_id 
+        WHERE t1.start_time <= NOW() AND t1.end_time >= NOW() AND t2.status = :userType";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':userType', $userType);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $count = $resultSet->fetch(PDO::FETCH_ASSOC);
+
+        return $count["COUNT(*)"];
+    }
 }
