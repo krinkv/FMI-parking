@@ -3,7 +3,7 @@
 $configs = array(
     'host' => 'localhost',
     'username' => 'root',
-    'password' => "",
+    'password' => "Chelsea1905-",
     'database_name' => "fmi_parking",
 );
 
@@ -15,6 +15,6 @@ function getDatabaseConnection()
     $username = $configs['username'];
     $password = $configs['password'];
 
-    $connection = new PDO("mysql:host=$host;dbname=$dbname", $username, $password) or Utils::showMessage(MessageUtils::NOT_ESTABLISHED_DATABASE_MESSAGE, false);
+    $connection = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     return $connection;
 }
