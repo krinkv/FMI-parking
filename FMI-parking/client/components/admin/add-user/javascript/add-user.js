@@ -19,12 +19,15 @@ function addUser() {
             data[input.name] = input.value;
         })
 
+        console.log(data)
+
         sendFormData(data)
             .then((responseMessage) => {
                 if (responseMessage["status"] === "ERROR") {
                     throw new Error(responseMessage["message"]);
                 }
                 else {
+                    console.log("REGISTERED USER")
                     window.location.replace("../account/account_view.html"); // redirect user to his newly created account
                 }
             })
@@ -36,7 +39,7 @@ function addUser() {
 
 /* send the inputted data over to the backend and based on the server's response, display an error message or redirect user to his newly created account */
 function sendFormData(data) {
-    return fetch("../../backend/api/registration/register_user.php", {
+    return fetch("../../../../server/controller/user_registration.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -57,7 +60,7 @@ function showDiv(div, message) {
     let statusImage = document.createElement("img");
 
     // attach image attributes src and alt
-    statusImage.src = "./images/error_response.png";
+    statusImage.src = "../../../resources/error_response.png";
     statusImage.alt = "white exclamation mark on red background";
 
     // toggle classes

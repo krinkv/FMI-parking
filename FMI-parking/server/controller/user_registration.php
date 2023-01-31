@@ -15,13 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userGender = $user_data["gender"];
     $userCarNumber = $user_data["car_number"];
 
+    echo($userFirstname);
     if (DatabaseQueries::checkUserByValue('email', $userEmail)){
-
         http_response_code(400);
         exit(json_encode(["status" => "ERROR", "message" => "Email already taken !"]));
-
     } else {
-
         $user = new User($userFirstname, $userLastname, $userEmail, $userPassword, $userStatus, $userGender, $userCarNumber);
 
         DatabaseQueries::saveUser($user); // validation

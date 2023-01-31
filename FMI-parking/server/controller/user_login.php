@@ -10,16 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $user_data['password'];
 
     if(!DatabaseQueries::checkUserByValue('email', $email)) {
-      http_response_code(401);
-      exit(json_encode(["status" => "ERROR", "message" => "Грешен имейл или парола!"]));
+        http_response_code(401);
+        exit(json_encode(["status" => "ERROR", "message" => "Грешен имейл или парола!"]));
     }
 
     $user_db = DatabaseQueries::getUserByEmail($email); // validation
     $user_db_password = $user_db->getPassword();
 
     if($password != $user_db_password) {
-      http_response_code(401);
-      exit(json_encode(["status" => "ERROR", "message" => "Грешен имейл или парола!"]));
+        http_response_code(401);
+        exit(json_encode(["status" => "ERROR", "message" => "Грешен имейл или парола!"]));
     }
 
     session_start();

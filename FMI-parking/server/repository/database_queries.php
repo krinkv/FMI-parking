@@ -20,6 +20,10 @@ class DatabaseQueries
         $userCarNumber = $user->getCarNumber();
         
         $connection = getDatabaseConnection();
+        if (!$connection) {
+            throw new Exception("Unable to connect to the database.");
+        }
+
         $preparedSql = $connection->prepare($sql);
         $preparedSql->bindParam(':firstname', $userFirstname);
         $preparedSql->bindParam(':lastname', $userLastname);
@@ -28,7 +32,9 @@ class DatabaseQueries
         $preparedSql->bindParam(':status', $userStatus);
         $preparedSql->bindParam(':gender', $userGender);
         $preparedSql->bindParam(':carNumber', $userCarNumber);
-        $preparedSql->execute(); // Think how to handle errors !!!
+        if (!$preparedSql->execute()) {
+            throw new Exception("Unable to execute the query.");
+        }
     }
 
     public static function getUserByEmail($email)
