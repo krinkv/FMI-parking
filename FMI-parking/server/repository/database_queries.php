@@ -42,7 +42,7 @@ class DatabaseQueries
         $resultSet->execute(); // Think how to handle errors !!!
         $user = $resultSet->fetch(PDO::FETCH_ASSOC);
 
-        return new User($user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
+        return new User($user["user_id"], $user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
     }
 
     public static function getUserByValue($fieldName, $fieldValue)
@@ -113,5 +113,21 @@ class DatabaseQueries
         $count = $resultSet->fetch(PDO::FETCH_ASSOC);
 
         return $count["COUNT(*)"];
+    }
+
+    public static function getUserProgram($userId) {
+        
+        $sql = "SELECT c.title, c.start_time, c.end_time  FROM `user` u 
+            JOIN users_courses uc ON u.user_id = uc.user_id
+            JOIN course c ON uc.course_id = c.course_id
+            WHERE u.user_id = :userId";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':userId', $userId);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $result = $resultSet->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
     }
 }
