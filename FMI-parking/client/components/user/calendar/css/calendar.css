@@ -1,6 +1,6 @@
 :root {
     --numDays: 5;
-    --numHours: 10;
+    --numHours: 11;
     --timeHeight: 100px;
     --calBgColor: #2c3e50;
     --eventBorderColor: #1abc9c;
@@ -21,6 +21,7 @@
 .timeline {
     display: grid;
     grid-template-rows: repeat(var(--numHours), var(--timeHeight));
+    padding-top: 50px;
 }
 
 .days {
@@ -37,46 +38,10 @@
     background: var(--calBgColor);
 }
 
-.start-10 {
-       grid-row-start: 2;
-   }
-
-.start-12 {
-    grid-row-start: 4;
+.title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
 }
-
-.start-1 {
-    grid-row-start: 5;
-}
-
-.start-2 {
-    grid-row-start: 6;
-}
-
-.end-12 {
-    grid-row-end: 4;
-}
-
-.end-1 {
-    grid-row-end: 5;
-}
-
-.end-3 {
-    grid-row-end: 7;
-}
-
-.end-4 {
-    grid-row-end: 8;
-}
-
-.end-5 {
-    grid-row-end: 9;
-}
-
-   .title {
-       font-weight: 600;
-       margin-bottom: 0.25rem;
-   }
 
 .event {
     border: 1px solid var(--eventBorderColor);
@@ -136,11 +101,14 @@ body {
     padding-top: 5%;
 }
 
+.spacer {
+    position: relative;
+    bottom: 50px
+}
+
 .content {
     background-color: rgb(241, 242, 247);
     margin-left: 240px;
-    /*margin-top: -20px;*/
-    /*margin-right: -5px;*/
     height: 100%;
     bottom: 35px;
     position: relative;
