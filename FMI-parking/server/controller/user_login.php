@@ -9,12 +9,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $user_data['email'];
     $password = $user_data['password'];
 
-    $user_db = getUserByEmail($email); // validation
+    if(!DatabaseQueries::checkUserByValue('email', $email)) {
+      http_response_code(400);
+      exit(json_encode(["status" => "ERROR", "message" => "Bad credentials !"]));
+    }
 
-    // Check if password is correct
+    $user_db = DatabaseQueries::getUserByEmail($email); // validation
+    $user_db_password = $user_db->getPassword();
+
+    if(!password_verify($password, $user_db_password)) {
+      http_response_code(400);
+      exit(json_encode(["status" => "ERROR", "message" => "Bad credentials !"]));
+    }
 
     session_start();
-    $_SESSION["user"] = $db_user;
+    $_SESSION["user"] = $user_db;
 
     http_response_code(200);
     exit(json_encode(["status" => "SUCCESS", "message" => "Successfull login"]));

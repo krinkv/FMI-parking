@@ -10,21 +10,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userFirstname = $user_data["first_name"];
     $userLastname = $user_data["last_name"];
     $userEmail = $user_data["email"];
-    $userPassword = $user_data["password"];
+    $userPassword = password_hash($user_data["password"], PASSWORD_BCRYPT);
     $userStatus = $user_data["status"];
     $userGender = $user_data["gender"];
     $userCarNumber = $user_data["car_number"];
 
-    // Hash password, Validation
-    $user = new User($userFirstname, $userLastname, $userEmail, $userPassword, $userStatus, $userGender, $userCarNumber);
+    if (DatabaseQueries::checkUserByValue('email', $userEmail)){
 
-    DatabaseQueries::saveUser($user); // validation
+        http_response_code(400);
+        exit(json_encode(["status" => "ERROR", "message" => "Email already taken !"]));
 
-    session_start();
-    $_SESSION["user"] = $user;
+    } else {
 
-    http_response_code(200);
-    exit(json_encode(["status" => "SUCCESS", "message" => "Successfull registration"]));
+        $user = new User($userFirstname, $userLastname, $userEmail, $userPassword, $userStatus, $userGender, $userCarNumber);
+
+        DatabaseQueries::saveUser($user); // validation
+
+        session_start();
+        $_SESSION["user"] = $user;
+
+        http_response_code(200);
+        exit(json_encode(["status" => "SUCCESS", "message" => "Successfull registration"]));
+    }
 }
 
 // $userFirstname = $user_data["first_name"];
