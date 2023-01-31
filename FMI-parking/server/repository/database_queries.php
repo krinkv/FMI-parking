@@ -58,4 +58,18 @@ class DatabaseQueries
 
         return new User($user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
     }
+
+    public static function checkUserByValue($fieldName, $fieldValue)
+    {
+        $table = "user";
+        $sql = "SELECT * FROM $table WHERE " . $fieldName ." = :fieldValue;";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':fieldValue', $fieldValue);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $user = $resultSet->fetch(PDO::FETCH_ASSOC);
+
+        return !empty($user);
+    }
 }
