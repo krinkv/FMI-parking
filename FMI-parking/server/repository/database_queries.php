@@ -7,7 +7,7 @@ class DatabaseQueries
     public static function saveUser(User $user)
     {
         // Validation if there already is such user
-        $table = "users";
+        $table = "user";
         $sql = "INSERT INTO $table (first_name, last_name, email, password, status, gender, car_number) 
                         VALUES (:firstname, :lastname, :email, :password, :status, :gender, :carNumber);";
 
@@ -33,7 +33,7 @@ class DatabaseQueries
 
     public static function getUserByEmail($email)
     {
-        $table = "users";
+        $table = "user";
         $sql = "SELECT * FROM $table WHERE email = :email;";
 
         $connection = getDatabaseConnection();
