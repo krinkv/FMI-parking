@@ -1,8 +1,8 @@
-const toRegistrationBtn = document.getElementById("login-button"); // button, redirecting to the registration page
-
-toRegistrationBtn.addEventListener('click', () => {
-    window.location.href = "../admin/dashboard/admin-dashboard.html"; // redirect the user over to the registration page with an option to go back from the browser
-});
+//const toRegistrationBtn = document.getElementById("login-button"); // button, redirecting to the registration page
+//
+//toRegistrationBtn.addEventListener('click', () => {
+//    window.location.href = "../admin/admin-dashboard/admin-dashboard.html"; // redirect the user over to the registration page with an option to go back from the browser
+//});
 
 function login() {
     const inputs = document.querySelectorAll("input"); // all input fields from login form
@@ -21,6 +21,8 @@ function login() {
             data[input.name] = input.value;
         });
 
+        console.log(data);
+
         // clear the contents from the previous message
         responseDiv.innerHTML = null;
 
@@ -31,7 +33,12 @@ function login() {
                     throw new Error(responseMessage["message"]);
                 }
                 else {
-                    window.location.replace("../account/account_view.html"); // if the login resulted in success, then redirect the user over to his account page
+                    // if the login resulted in success, then redirect the user over to his account page
+                    if (responseMessage["role"] === "ADMIN") {
+                        window.location.replace("../admin/admin-dashboard/admin-dashboard.html");
+                    } else {
+                        window.location.replace("../user/user-dashboard/user-dashboard.html");
+                    }
                 }
             })
             .catch((errorMessage) => {
@@ -40,9 +47,9 @@ function login() {
     })
 };
   
-  /* sends the inputted data over to the backend to authenticate the user */
+/* sends the input data to the backend to authenticate the user */
 function checkLoginData(data) {
-    return fetch("../../backend/api/login/login_user.php", {
+    return fetch("../../../server/controller/user_login.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -62,7 +69,7 @@ function createErrorDivContent(div, response) {
     div.innerHTML=null;
     // create the image and append it's attributes src and alt
     let errorImage = document.createElement("img");
-    errorImage.src = "./images/error_response.png";
+    errorImage.src = "../../../resources/error_response.png";
     errorImage.alt = "white exclamation mark on red background"
 
     // create the text of the response
@@ -77,28 +84,4 @@ function createErrorDivContent(div, response) {
 
     // show it to the user
     div.classList.remove("no-show");
-}
-
-function showDiv(div, message) {
-    div.innerHTML = null;
-    // create the image of the error (a white exclamation mark)
-    let statusImage = document.createElement("img");
-
-    // attach image attributes src and alt
-    statusImage.src = "./images/error_response.png";
-    statusImage.alt = "white exclamation mark on red background";
-
-    // toggle classes
-    div.classList.add("error");
-    div.classList.remove("no-show");
-
-    // create error text and append to span element
-    let messageContainer = document.createElement("span");
-    let responseMessage = document.createElement("p");
-    responseMessage.textContent = message;
-    messageContainer.appendChild(responseMessage);
-
-    // append all created elements to the response div
-    div.appendChild(statusImage);
-    div.appendChild(messageContainer);
 }
