@@ -26,6 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION["user"] = $user_db;
 
     http_response_code(200);
-    exit(json_encode(["status" => "SUCCESS", "message" => "Успешен вход в профила!", "role" => $user_db->getStatus()]));
+    exit(json_encode(["status" => "SUCCESS", "message" => "Успешен вход в профила!", "role" => $user_db->getStatus(), "user_id" => $user_db->getUserId()]));
   }
 ?>
