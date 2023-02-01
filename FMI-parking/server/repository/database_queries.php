@@ -130,4 +130,59 @@ class DatabaseQueries
 
         return $result;
     }
+
+    public static function getTakenSpotsInTimeRange($startTime, $endTime) {
+        
+        $sql = 
+        "SELECT ps.parking_spot_id, ps.sector from parking_spot ps 
+        LEFT JOIN user_parking_spot_info upsi ON ps.parking_spot_id = upsi.parking_spot_id
+        WHERE upsi.parking_spot_id is not NULL AND 
+            ((upsi.start_time <= :startTime AND upsi.end_time > :startTime) OR
+            (upsi.start_time < :endTime AND upsi.end_time >= :endTime))
+        GROUP BY ps.parking_spot_id, ps.sector;";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':startTime', $startTime);
+        $resultSet->bindParam(':endTime', $endTime);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $result = $resultSet->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public static function isSpotFreeForTimeSlot($spotId, $startTime, $endTime) {
+        
+        $sql = 
+        "SELECT ps.parking_spot_id from parking_spot ps 
+                LEFT JOIN user_parking_spot_info upsi ON ps.parking_spot_id = upsi.parking_spot_id
+                WHERE ((upsi.parking_spot_id is NULL)
+                OR NOT ((upsi.start_time <= :startTime AND upsi.end_time > :startTime) OR
+                        (upsi.start_time < :endTime AND upsi.end_time >= :endTime)))
+                AND ps.parking_spot_id = :spotId;";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':startTime', $startTime);
+        $resultSet->bindParam(':endTime', $endTime);
+        $resultSet->bindParam(':spotId', $spotId);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $result = $resultSet->fetchAll(PDO::FETCH_ASSOC);
+
+        return !empty($result);
+    }
+
+    public static function reserveParkingSpot($userId, $parkingSpotId, $startTime, $endTime) {
+        
+        $sql = 
+        "INSERT INTO user_parking_spot_info VALUES (:userId, :parkingSpotId, :startTime, :endTime);";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':userId', $userId);
+        $resultSet->bindParam(':parkingSpotId', $parkingSpotId);
+        $resultSet->bindParam(':startTime', $startTime);
+        $resultSet->bindParam(':endTime', $endTime);
+        $resultSet->execute();
+    }
 }
