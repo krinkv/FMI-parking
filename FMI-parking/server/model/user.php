@@ -10,9 +10,8 @@ class User
     private $gender;
     private $carNumber;
 
-    public function __construct($userId, $firstName, $lastName, $email, $password, $status, $gender, $carNumber)
+    public function __construct($firstName, $lastName, $email, $password, $status, $gender, $carNumber)
     {
-        $this->userId = $userId;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
