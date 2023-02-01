@@ -191,4 +191,28 @@ class DatabaseQueries
         $resultSet->bindParam(':endTime', $endTime);
         $resultSet->execute();
     }
+
+    public static function addCourse($title, $day, $startTime, $endTime, $email) {
+        $sql1 = "INSERT INTO course (title, `day`, start_time, end_time) VALUES (:title, :dayWeek, :startTime, :endTime);";
+        
+        $connection1 = getDatabaseConnection();
+        $resultSet1 = $connection1->prepare($sql1);
+        $resultSet1->bindParam(':title', $title);
+        $resultSet1->bindParam(':dayWeek', $day);
+        $resultSet1->bindParam(':startTime', $startTime);
+        $resultSet1->bindParam(':endTime', $endTime);
+        $resultSet1->execute();
+
+        $courseId = $connection1->lastInsertId();
+        $user = DatabaseQueries::getUserByEmail($email);
+        $userId = $user->getUserId();
+
+        $sql2 = "INSERT INTO users_courses VALUES (:courseId, :userId);";
+        
+        $connection2 = getDatabaseConnection();
+        $resultSet2 = $connection2->prepare($sql2);
+        $resultSet2->bindParam(':courseId', $courseId);
+        $resultSet2->bindParam(':userId', $userId);
+        $resultSet2->execute();
+    }
 }
