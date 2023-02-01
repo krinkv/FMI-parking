@@ -95,4 +95,9 @@ class User
     {
         return $this->userId;
     }
+
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
 }

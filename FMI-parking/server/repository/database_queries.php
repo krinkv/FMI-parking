@@ -42,7 +42,10 @@ class DatabaseQueries
         $resultSet->execute(); // Think how to handle errors !!!
         $user = $resultSet->fetch(PDO::FETCH_ASSOC);
 
-        return new User($user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
+        $res = new User($user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
+        $res->setUserId($user["user_id"]);
+
+        return $res;
     }
 
     public static function getUserByValue($fieldName, $fieldValue)
@@ -56,7 +59,10 @@ class DatabaseQueries
         $resultSet->execute(); // Think how to handle errors !!!
         $user = $resultSet->fetch(PDO::FETCH_ASSOC);
 
-        return new User($user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
+        $res = new User($user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
+        $res->setUserId($user["user_id"]);
+
+        return $res;
     }
 
     public static function checkUserByValue($fieldName, $fieldValue)
@@ -117,7 +123,7 @@ class DatabaseQueries
 
     public static function getUserProgram($userId) {
         
-        $sql = "SELECT c.title, c.start_time, c.end_time  FROM `user` u 
+        $sql = "SELECT c.title, c.start_time, c.end_time, c.day  FROM `user` u 
             JOIN users_courses uc ON u.user_id = uc.user_id
             JOIN course c ON uc.course_id = c.course_id
             WHERE u.user_id = :userId";
