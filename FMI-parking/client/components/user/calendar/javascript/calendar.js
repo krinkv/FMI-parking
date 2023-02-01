@@ -43,11 +43,11 @@ function addElement(course) {
 
     for (let i = 0; i < HOURS.length; i++) {
         if (startHour === HOURS[i]) {
-            newDiv.style.gridRowStart = i + 1;
+            newDiv.style.gridRowStart = i + 2;
         }
 
         if (endHour === HOURS[i]) {
-            newDiv.style.gridRowEnd = i + 1;
+            newDiv.style.gridRowEnd = i + 2;
         }
     }
 
