@@ -42,7 +42,7 @@ class DatabaseQueries
         $resultSet->execute(); // Think how to handle errors !!!
         $user = $resultSet->fetch(PDO::FETCH_ASSOC);
 
-        return new User($user["user_id"], $user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
+        return new User($user["first_name"], $user["last_name"], $user["email"], $user["password"], $user["status"], $user["gender"], $user["car_number"]);
     }
 
     public static function getUserByValue($fieldName, $fieldValue)
