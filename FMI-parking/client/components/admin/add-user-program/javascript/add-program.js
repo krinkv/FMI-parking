@@ -37,7 +37,7 @@ function addProgram() {
     const form = document.getElementById("add-program-form"); // the registration form
     const inputs = document.querySelectorAll("input, select"); // the input fields and the select one
     const responseDiv = document.getElementById("fail-input-err-msg"); // the div that will contain the error message if the backend returned an error
-
+    console.log("did smth happened ?")
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // prevent the form from resetting
 
@@ -52,7 +52,7 @@ function addProgram() {
         inputs.forEach(input => {
             data[input.name] = input.value;
         })
-
+        console.log(data);
         sendFormData(data)
             .then((responseMessage) => {
                 if (responseMessage["status"] === "ERROR") {
