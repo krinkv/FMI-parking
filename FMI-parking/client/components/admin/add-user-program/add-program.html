@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/add-program.css">
+  <link rel="stylesheet" href="../admin-sidebar/css/admin-sidebar.css">
+  <script defer src="javascript/add-program.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <title>Добави предмет</title>
+</head>
+<body>
+<div id="sidebar-placeholder"></div>
+<div class="container" id="container">
+        <div class="form-container left-container">
+            <img src="../../../resources/logo.png" alt="Parking system logo">
+        </div>
+        <div class="overlay-container">
+            <form id="add-program-form">
+                <h1>Добави предмет за потребител</h1>
+
+                <input type="email" placeholder="Имейл" name="email" required id="email">
+
+                <input type="text" placeholder="Име на предмет" name="subjectName" required id="subject">
+
+                <select name="day" id="day" class="custom-select">
+                    <option value="MONDAY">Понеделник</option>
+                    <option value="TUESDAY">Вторник</option>
+                    <option value="WEDNESDAY">Сряда</option>
+                    <option value="THURSDAY">Четвъртък</option>
+                    <option value="FRIDAY">Петък</option>
+                </select>
+
+                <select name="startTime" id="begin-hour" class="custom-select">
+                    <option value="09:00:00">09:00</option>
+                    <option value="10:00:00">10:00</option>
+                    <option value="11:00:00">11:00</option>
+                    <option value="12:00:00">12:00</option>
+                    <option value="13:00:00">13:00</option>
+                    <option value="14:00:00">14:00</option>
+                    <option value="15:00:00">15:00</option>
+                    <option value="16:00:00">16:00</option>
+                    <option value="17:00:00">17:00</option>
+                </select>
+
+                <select name="endTime" id="end-hour" class="custom-select">
+                    <option value="10:00:00">10:00</option>
+                    <option value="11:00:00">11:00</option>
+                    <option value="12:00:00">12:00</option>
+                    <option value="13:00:00">13:00</option>
+                    <option value="14:00:00">14:00</option>
+                    <option value="15:00:00">15:00</option>
+                    <option value="16:00:00">16:00</option>
+                    <option value="17:00:00">17:00</option>
+                    <option value="18:00:00">18:00</option>
+                </select>
+
+                <!-- submit button -->
+                <button type="submit" id="register-button" onclick="addProgram()">Добави</button>
+
+                <!-- response when a field was incorrect -->
+                <div class="form-item no-show" id="fail-input-err-msg">
+                </div>
+                <div class="form-item no-show" id="success-response">
+                </div>
+              </form>
+        </div>
+    </div>
+</body>
+<script>
+    $(function(){
+        $("#sidebar-placeholder").load("../admin-sidebar/admin-sidebar.html");
+    });
+</script>
+</html>
