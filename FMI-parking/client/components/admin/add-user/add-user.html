@@ -23,17 +23,17 @@
 
                 <div class="wrapper">
                 <!-- first name -->
-                <input type="text" placeholder="Име" autocomplete="off" required name="firstname" id="firstname">
+                <input type="text" placeholder="Име" autocomplete="off" required name="first_name" id="firstname">
 
                 <!-- last name -->
-                <input type="text" placeholder="Фамилия" autocomplete="off" required name="lastname" id="lastname">
+                <input type="text" placeholder="Фамилия" autocomplete="off" required name="last_name" id="lastname">
               </div>
 
               <div class="wrapper">
                 <!-- user sex -->
-                <select name="sex" id="sex" class="custom-select">
-                  <option value="M">Мъж</option>
-                  <option value="F">Жена</option>
+                <select name="gender" id="sex" class="custom-select">
+                  <option value="MALE">Мъж</option>
+                  <option value="FEMALE">Жена</option>
                 </select>
 
                 <!-- car number -->
@@ -41,19 +41,19 @@
               </div>
 
                 <!-- email -->
-                <input type="email" placeholder="Имейл" required name="email-register" id="email">
+                <input type="email" placeholder="Имейл" required name="email" id="email">
 
                 <!-- password -->
-                <input type="password" placeholder="Парола" required name="password-register" id="password">
+                <input type="password" placeholder="Парола" required name="password" id="password">
 
                 <!-- repeat password -->
                 <input type="password" placeholder="Повторете паролата" required name="repeat_password" id="repeat-password">
 
                 <!-- user type -->
-                <select name="user_type" id="user-type" class="custom-select">
-                  <option value="Щатен преподавател">Щатен преподавател</option>
-                  <option value="Хоноруван преподавател">Хоноруван преподавател</option>
-                  <option value="Студент">Студент</option>
+                <select name="status" id="user-type" class="custom-select">
+                  <option value="FULL_TIME_LECTURER">Щатен преподавател</option>
+                  <option value="CONTRACT_LECTURER">Хоноруван преподавател</option>
+                  <option value="RESTRICTED_ACCESS">Студент</option>
                 </select>
 
                 <!-- submit button -->

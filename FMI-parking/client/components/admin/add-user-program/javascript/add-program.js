@@ -14,7 +14,8 @@ activities.addEventListener("click", function() {
 
 
 function createOptions(startHour, endHourSelect) {
-    const HOURS = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+    const HOURS = ["09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", 
+                   "15:00:00", "16:00:00", "17:00:00", "18:00:00"];
     var flag = false;
     for (let i = 1; i < HOURS.length; i++) {
         if (startHour === HOURS[i-1]) {
@@ -27,7 +28,7 @@ function createOptions(startHour, endHourSelect) {
 
         var option = document.createElement("option");
         option.value = HOURS[i];
-        option.innerHTML = HOURS[i];
+        option.innerHTML = HOURS[i].slice(0,5);
     
         endHourSelect.appendChild(option);
     }
@@ -37,7 +38,6 @@ function addProgram() {
     const form = document.getElementById("add-program-form"); // the registration form
     const inputs = document.querySelectorAll("input, select"); // the input fields and the select one
     const responseDiv = document.getElementById("fail-input-err-msg"); // the div that will contain the error message if the backend returned an error
-    console.log("did smth happened ?")
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // prevent the form from resetting
 
@@ -52,7 +52,6 @@ function addProgram() {
         inputs.forEach(input => {
             data[input.name] = input.value;
         })
-        console.log(data);
         sendFormData(data)
             .then((responseMessage) => {
                 if (responseMessage["status"] === "ERROR") {
@@ -61,7 +60,7 @@ function addProgram() {
                 else {
                     var successDiv = document.getElementById("success-response");
                     var successResponse = document.createElement("p");
-                    txt.innerHTML = "Success baby";
+                    successResponse.innerHTML = "Success baby";
                     successDiv.appendChild(successResponse);
                 }
             })

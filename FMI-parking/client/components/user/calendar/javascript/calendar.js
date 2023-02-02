@@ -7,7 +7,7 @@ window.onload = function loadUserProgram() {
             }
         })
         .catch((errorMessage) => {
-            console.log("ERROR");
+            console.log(errorMessage);
         })        
 }
 
@@ -28,9 +28,6 @@ function addElement(course) {
     // create a new div element
     const newDiv = document.createElement("div");
   
-    console.log(course.title);
-    console.log(course.start_time);
-    console.log(course.end_time);
     // and give it some content
     const newContent = document.createTextNode(course.title);
   
@@ -51,8 +48,7 @@ function addElement(course) {
         }
     }
 
-    // TODO: should be returned the day of the course and put down coruse.day instead of hard coded monday
-    const currentDiv = document.getElementById("monday");
+    const currentDiv = document.getElementById(course.day.toLowerCase());
   
     currentDiv.appendChild(newDiv);
   }

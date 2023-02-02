@@ -18,14 +18,13 @@ function addUser() {
         inputs.forEach(input => {
             data[input.name] = input.value;
         })
-
         sendFormData(data)
             .then((responseMessage) => {
                 if (responseMessage["status"] === "ERROR") {
                     throw new Error(responseMessage["message"]);
                 }
                 else {
-                    window.location.replace("../account/account_view.html"); // redirect user to his newly created account
+                    // print successfull msg ! important               
                 }
             })
             .catch((errorMsg) => {
@@ -36,7 +35,7 @@ function addUser() {
 
 /* send the inputted data over to the backend and based on the server's response, display an error message or redirect user to his newly created account */
 function sendFormData(data) {
-    return fetch("../../backend/api/registration/register_user.php", {
+    return fetch("../../../../server/controller/user_registration.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
