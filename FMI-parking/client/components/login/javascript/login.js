@@ -1,9 +1,3 @@
-//const toRegistrationBtn = document.getElementById("login-button"); // button, redirecting to the registration page
-//
-//toRegistrationBtn.addEventListener('click', () => {
-//    window.location.href = "../admin/admin-dashboard/admin-dashboard.html"; // redirect the user over to the registration page with an option to go back from the browser
-//});
-
 function login() {
     const inputs = document.querySelectorAll("input"); // all input fields from login form
     const form = document.getElementById("login-form"); // the login form
@@ -49,7 +43,7 @@ function login() {
   
 /* sends the input data to the backend to authenticate the user */
 function checkLoginData(data) {
-    return fetch("../../../server/controller/user_login.php", {
+    return fetch("..x/../../server/controller/user_login.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -69,7 +63,7 @@ function createErrorDivContent(div, response) {
     div.innerHTML=null;
     // create the image and append it's attributes src and alt
     let errorImage = document.createElement("img");
-    errorImage.src = "../../../resources/error_response.png";
+    errorImage.src = "../../resources/error_response.png";
     errorImage.alt = "white exclamation mark on red background"
 
     // create the text of the response

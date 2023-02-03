@@ -17,6 +17,13 @@ body {
 	/* color variables used later in the code */
 	--buttons: #1abc9c;
 	--buttonsHover: #1abc9c;
+    --white: #FFFFFF;
+    --gradient1: #FA7D67;
+    --gradient2: #FF416C;
+    --responseMessage: #FF4D4D;
+    --responseMessageBox: #FF4D4DB3;
+    --mainContainerShadow1: #00000040;
+    --mainContainerShadow2: #00000038;
 }
 
 h1 {
