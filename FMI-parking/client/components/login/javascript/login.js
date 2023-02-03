@@ -43,7 +43,7 @@ function login() {
   
 /* sends the input data to the backend to authenticate the user */
 function checkLoginData(data) {
-    return fetch("..x/../../server/controller/user_login.php", {
+    return fetch("../../../server/controller/user_login.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
