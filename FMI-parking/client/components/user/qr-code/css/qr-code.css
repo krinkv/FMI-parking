@@ -1,1 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+img {
+  width: 50%;
+  height: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+body {
+     font-family: system-ui, sans-serif;
+}
