@@ -56,7 +56,7 @@ CREATE TABLE `user_parking_spot_info` (
     `user_id` int NOT NULL,
     `parking_spot_id` int NOT NULL,
     `start_time` datetime NOT NULL,
-    `end_time` datetime NOT NULL-- ,
+    `end_time` datetime NOT NULL,
     FOREIGN KEY (parking_spot_id) REFERENCES parking_spot(parking_spot_id),
     FOREIGN KEY (user_id) REFERENCES `user`(user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
