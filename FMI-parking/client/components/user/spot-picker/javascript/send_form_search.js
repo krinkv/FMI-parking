@@ -114,8 +114,10 @@ function colorButtons(takenSlots, unavailableSlots) {
 
     // color the rest in green, meaning that they are non-taken
     for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].id != "") {
+            continue;
+        }
         if (!buttons[i].classList.contains("taken-slot")) {
-            console.log("Coloring button ", buttons[i].textContent, " in green");
             buttons[i].classList.add("non-taken-slot");
         }
     }
