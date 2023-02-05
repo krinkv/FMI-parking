@@ -4,6 +4,7 @@
 
     const searchBtn = document.querySelector("button.search-btn"); // get the "Търси" button
     searchBtn.addEventListener('click', () => { // whenever the "Търси" button is pressed
+        console.log("search button is pressed");
         const data = document.querySelectorAll("input#date, select#start-time, select#end-time"); // get the date input and the selects for the start and end time of the searched interval
         
         /* create an object which will look like:
@@ -34,7 +35,20 @@
         // reset the form
         form.reset();
 
-        sendSearchData(search_data)
+        colorButtons(
+        [
+            { "zone": "A", "code": "2" },
+            { "zone": "A", "code": "3" },
+            { "zone": "A", "code": "5" },
+        ],
+        [
+            { "zone": "A", "code": "1" },
+            { "zone": "A", "code": "7" }
+        ]
+        );
+        createSearchParams(search_data["date"], search_data["start-time"], search_data["end-time"])
+
+        /*sendSearchData(search_data)
         .then((data) => { // recieves buttons to be colored in red
             if (data["status"] == "SUCCESS") {
                 colorButtons(data["taken_slots"], data["unavailable_slots"]);
@@ -46,7 +60,7 @@
         })
         .catch((errorMsg) => {
             displayError(errorMsg);
-        })
+        })*/
     })
 })();
 
@@ -78,6 +92,9 @@ function colorButtons(takenSlots, unavailableSlots) {
     const buttons = document.getElementsByTagName("button");
 
     for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].id != "") {
+            continue;
+        }
         buttons[i].classList.remove("taken-slot"); // remove class from previous searches
         buttons[i].classList.remove("non-taken-slot"); // remove class from previous searches
         buttons[i].classList.remove("unavailable-slot"); // remove class from previous searches
@@ -98,6 +115,7 @@ function colorButtons(takenSlots, unavailableSlots) {
     // color the rest in green, meaning that they are non-taken
     for (let i = 0; i < buttons.length; i++) {
         if (!buttons[i].classList.contains("taken-slot")) {
+            console.log("Coloring button ", buttons[i].textContent, " in green");
             buttons[i].classList.add("non-taken-slot");
         }
     }

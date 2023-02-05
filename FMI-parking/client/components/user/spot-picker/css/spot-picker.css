@@ -2,6 +2,15 @@
     box-sizing: border-box
 }
 
+body {
+    margin: 0;
+    margin-top: 20px;
+    min-height: 100vh;
+
+    --red-color: #aa0428;
+    --green-color: rgb(50, 131, 36);
+}
+
 h2 {
     margin: 0;
 }
