@@ -12,135 +12,81 @@
     <script defer src="./javascript/send_form_search.js"></script>
     <script defer src="./javascript/handle_select_options.js"></script>
     <script defer src="./javascript/buttons_click.js"></script>
+    <script src="./javascript/form.js"></script>  
     <title>Save slot</title>
 </head>
-<div id="user-sidebar-placeholder"></div>
 <body>
-    <main>
-        <!-- Form for querying available places in a specific time period -->
-        <form id="search-form">
+<div id="user-sidebar-placeholder"></div>
+<div class="content">
+    <div id="overlay"></div>
+	<div class="container calendar">
+		<div class="header">
+			<div class="icon arr prev"></div>
+			<div class="month">February 2023</div>
+			<div class="icon arr next"></div>
+		</div>
+		<table id="table">
+			<tr>
+				<th>Нед</th><th>Пон</th><th>Вт</th><th>Ср</th><th>Четв</th><th>Пет</th><th>Съб</th>
+			</tr>
+		</table>
+		<button class="button-big" id="add_event">Запази</button>
+	</div>
 
-            <!-- Form header -->
-            <header id="form-header">
-                <h2 class="text">Изберете времеви интервал</h2>
-            </header>
 
-            <!-- The form itself -->
-            <section id="form-inputs">
+	<form action="" class="container booking" name="booking">
+		<!-- <div class="header">
+			<div>
+				<h2>Hotel Relais</h2>
+				<div class="icon"></div>
+				<p>Paris, France</p>
+			</div>
+		</div> -->
+		
+		<div class="dates" data-type="none">
+			<label for="checkin">Начален час</label>
+			<div class="input-text">
+				<input type="datetime" value="9 July, 2016" id="checkin" readonly>
+				<div class="icon pop-up" onclick="showCalendar()"></div>
+			</div>
 
-                <!-- Date for the query -->
-                <div class="form-item">
-                    <label for="date" class="text">Дата:</label>
-                    <input type="date" name="date" id="date">
-                </div>
-    
-                <!-- The beggining of the time interval -->
-                <div class="form-item">
-                    <label for="start-time" class="text">Начало:</label>
+			<label for="checkout">Краен час</label>
+			<div class="input-text">
+				<input type="datetime" value="16 July, 2016" id="checkout" readonly>
+				<div class="icon pop-up"></div>
+			</div>
+		</div>
+		
+		<ul class="persons">
+			<li>
+				<label>Зона</label>
+				<div class="input-text">
+					<select name="adults">
+						<option value="1">ФМИ</option>
+						<option value="2">ФЗФ</option>
+						<option value="3">ФХФ</option>
+					</select>
+					<div class="icon"></div>
+				</div>
+			</li>
+			<li>
+				<label>Номер</label>
+				<div class="input-text">
+					<select name="children">
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>   
+					</select>
+					<div class="icon"></div>
+				</div>
+			</li>
+		</ul>
 
-                    <!-- Its options are created dynamically -->
-                    <select name="start-time" id="start-time">
-                    </select>
-                </div>
-    
-                <!-- The end of the time interval -->
-                <div class="form-item">
-                    <label for="end-time" class="text">Край:</label>
-
-                    <!-- Its options are created dynamically -->
-                    <select name="end-time" id="end-time">
-                    </select>
-                </div>
-    
-                <!-- button "Търси" for submitting the form -->
-                <button type="button" id="search-btn" class="search-btn">Търси</button>
-
-                <!-- <div id="search-params">
-                    <h2 class="text">Избран времеви интервал</h2>
-                    <p>Дата: <span id="date-value">22.06.2021</span>; Интервал: <span id="start-time-value">7</span>&ndash;<span id="end-time-value">8</span></p>
-                </div> -->
-            </section>
-
-            <!-- Response from the backend -->
-            <div id="response">
-            </div>
-        </form>
-
-        <!-- Slideshow -->
-        <div class="slideshow-container">
-
-            <!-- First slide -->
-            <div class="mySlides fade">
-                <div class="numbertext">1 / 4</div>
-                <img src="./images/azone.png" class="zoomedZones border" alt="zoneA">
-                <div class="text">ФМИ заден вход</div>
-            </div>
-    
-            <!-- Second slide -->
-            <div class="mySlides fade">
-                <div class="numbertext">2 / 4</div>
-                <img src="./images/bzone.png" class="zoomedZones border" alt="zoneB">
-                <div class="text">ФзФ</div>
-            </div>
-    
-            <!-- Third slide -->
-            <div class="mySlides fade">
-                <div class="numbertext">3 / 4</div>
-                <img src="./images/czone.png" class="zoomedZones border" alt="zoneC">
-                <div class="text">ФХФ</div>
-            </div>
-    
-            <!-- Fourth slide -->
-            <div class="mySlides fade">
-                <div class="numbertext">4 / 4</div>
-                <img src="./images/dzone.png" class="zoomedZones border" alt="zoneD">
-                <div class="text">ФМИ главен вход</div>
-            </div>
-    
-            <!-- Pointers for next and previous slide -->
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
-    
-        <!-- Zone buttons -->
-        <div class="btn-container">
-            <button class="btn" onclick="currentSlide(1)" id="zonea-btn">Зона А</img>
-            <button class="btn" onclick="currentSlide(2)" id="zoneb-btn">Зона B</img>
-            <button class="btn" onclick="currentSlide(3)" id="zonec-btn">Зона C</img>
-            <button class="btn" onclick="currentSlide(4)" id="zoned-btn">Зона D</img>
-        </div>
-    
-        <!-- Response from the backend -->
-        <div id="reservation-response">
-        </div>
-
-        <!-- Container of the buttons for each of the slots for the given zone (will be added dynamically by JS) -->
-    </main>
-
-    <!-- Confirmation box for when the user clicks on an available slot -->
-    <div id="confirm-message-container" class="non-visible">
-        <section id="message">
-            <p id="confirm-message">Сигурни ли сте, че искате да резервирате <span id="selected-button"></span>?</p>
-        </section>
-
-        <ul id="button-list">
-            <li id="yes-button">
-                <span>ДА</span>
-            </li>
-            <li id="no-button">
-                <span>НЕ</span>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Dimmer that is used when the confirmation box is displayed (it makes sure that only the confirmation box's options can be pressed and dims everything but the confirmation box)-->
-    <div class="dimmer non-visible">
-    </div>
-
-    <!-- "Назад" button -->
-    <aside>
-        <button class="search-btn" id="back-btn" style="position:absolute; left: 300px;">Назад</button>
-    </aside>  
+		<button class="button-big" id="search"><div class="icon"></div>Запази място</button>
+	</form>
+</div>
 </body>
 <script>
     $(function(){
