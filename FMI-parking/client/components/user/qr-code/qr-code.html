@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="css/qr-code.css">
+    <link rel="stylesheet" href="../user-sidebar/css/user-sidebar.css">
+    <script defer src="../user-sidebar/javascript/user-sidebar.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="javascript/qr-code.js"></script>
+    <title>QR код</title>
+</head>
+<body>
+<div id="user-sidebar-placeholder"></div>
+<div id="qr-code-div">
+    <img class="qr-code-image" id="qr-code-image" src="" />
+</div>
+</body>
+<script>
+    $(function(){
+        $("#user-sidebar-placeholder").load("../user-sidebar/user-sidebar.html");
+    });
+</script>
+</html>
