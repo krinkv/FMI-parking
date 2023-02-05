@@ -1,3 +1,26 @@
+function loadParkingSpots() {
+    getParkingSpots()
+        .then((free_spots_now) => {
+            console.log(free_spots_now);
+        })
+        .catch((errorMessage) => {
+            console.log(errorMessage);
+        })
+}
+loadParkingSpots();
+
+function getParkingSpots() {
+    return fetch("../../../../server/controller/free_parking_spots.php", {
+        method: "GET",
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            return data.free_spots_now;
+        })
+}
+
 let slideIndex = 1; // keeps track of the current slide number
 const maxSlots = 10; // maximum slots per zone
 const maxOptions = 14, startTime = 7; // maximum options per select field and start time

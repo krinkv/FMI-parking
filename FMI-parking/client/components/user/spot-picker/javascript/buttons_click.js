@@ -5,6 +5,10 @@
 
     // for each button add a separate event listener
     for (let button of buttons) {
+        // if button has id it's one of the html buttons, otherwise it's one of the slot buttons generated at runtime by js
+        if (button.id != "") {
+            continue;
+        }
         button.addEventListener('click', () => {
             if (!button.classList.contains("non-taken-slot")) { // if the button does not correspond to a non-taken (free) slot, then do nothing
                 return;
