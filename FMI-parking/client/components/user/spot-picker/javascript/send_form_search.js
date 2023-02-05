@@ -16,10 +16,15 @@
         }
         
         */
-        let search_data = {};
+        let interval_data = {};
         data.forEach((field) => {
-            search_data[field.name] = field.value;
+            interval_data[field.name] = field.value;
         })
+        let search_data = {
+            "start_time": getDateTimeFormatted(interval_data["date"], interval_data["start-time"]),
+            "end_time": getDateTimeFormatted(interval_data["date"], interval_data["end-time"])
+        };
+
 
         // clear the form first
         // remove all attached attributes to the options of the select for the end time of the interval
@@ -48,10 +53,10 @@
         );
         createSearchParams(search_data["date"], search_data["start-time"], search_data["end-time"])
 
-        /*sendSearchData(search_data)
+        getTakenSpots(search_data)
         .then((data) => { // recieves buttons to be colored in red
             if (data["status"] == "SUCCESS") {
-                colorButtons(data["taken_slots"], data["unavailable_slots"]);
+                colorButtons(data["taken_slots"], []]);
                 createSearchParams(search_data["date"], search_data["start-time"], search_data["end-time"])
             }
             else {
@@ -60,13 +65,22 @@
         })
         .catch((errorMsg) => {
             displayError(errorMsg);
-        })*/
+        })
     })
 })();
 
+function getDateTimeFormatted(date, time) {
+    result = date + " ";
+    if (time.length == 1) {
+        time = "0" + time;
+    }
+    result += time + ":00:00";
+    return result;
+}
+
 // send a POST request over to the backend in order to send the searched interval and recieve the information about the buttons
-function sendSearchData(data) {
-    return fetch("../../backend/api/check_slots/check_slots.php", {
+function getTakenSpots(data) {
+    return fetch("../../../../server/controller/taken_parking_spots.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -102,7 +116,7 @@ function colorButtons(takenSlots, unavailableSlots) {
     }
 
     for (let i = 0; i < takenSlots.length; i++) { // go through all the returned taken buttons
-        let zoneSlot = takenSlots[i]["zone"] + takenSlots[i]["code"]; // for example: "A7"
+        let zoneSlot = takenSlots[i]["sector"] + takenSlots[i]["parking_spot_id"]; // for example: "A7"
 
         for (let j = 0; j < buttons.length; j++) {
             if (buttons[j].textContent == zoneSlot) { // find the button from above in all the buttons
@@ -124,7 +138,7 @@ function colorButtons(takenSlots, unavailableSlots) {
 
     // color the unavailable slots in gray
     for (let i = 0; i < unavailableSlots.length; i++) {
-        let zoneSlot = unavailableSlots[i]["zone"] + unavailableSlots[i]["code"]; // for example: "A7"
+        let zoneSlot = unavailableSlots[i]["sector"] + unavailableSlots[i]["parking_spot_id"]; // for example: "A7"
 
         for (let j = 0; j < buttons.length; j++) {
             if (buttons[j].textContent == zoneSlot) { // find the button from above in all the buttons
