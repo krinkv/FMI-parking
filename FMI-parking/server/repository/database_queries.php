@@ -140,7 +140,7 @@ class DatabaseQueries
     public static function getTakenSpotsInTimeRange($startTime, $endTime) {
         
         $sql = 
-        "SELECT ps.parking_spot_id, ps.sector from parking_spot ps 
+        "SELECT ps.number, ps.sector from parking_spot ps 
         LEFT JOIN user_parking_spot_info upsi ON ps.parking_spot_id = upsi.parking_spot_id
         WHERE upsi.parking_spot_id is not NULL AND 
             ((upsi.start_time <= :startTime AND upsi.end_time > :startTime) OR
@@ -157,7 +157,7 @@ class DatabaseQueries
         return $result;
     }
 
-    public static function isSpotFreeForTimeSlot($spotId, $startTime, $endTime) {
+    public static function isSpotFreeForTimeSlot($sector, $number, $startTime, $endTime) {
         
         $sql = 
         "SELECT ps.parking_spot_id from parking_spot ps 
@@ -165,20 +165,37 @@ class DatabaseQueries
                 WHERE ((upsi.parking_spot_id is NULL)
                 OR NOT ((upsi.start_time <= :startTime AND upsi.end_time > :startTime) OR
                         (upsi.start_time < :endTime AND upsi.end_time >= :endTime)))
-                AND ps.parking_spot_id = :spotId;";
+                AND ps.sector = :sector AND ps.number = :num;";
 
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':startTime', $startTime);
         $resultSet->bindParam(':endTime', $endTime);
-        $resultSet->bindParam(':spotId', $spotId);
+        $resultSet->bindParam(':sector', $sector);
+        $resultSet->bindParam(':num', $number);
         $resultSet->execute(); // Think how to handle errors !!!
         $result = $resultSet->fetchAll(PDO::FETCH_ASSOC);
 
         return !empty($result);
     }
 
-    public static function reserveParkingSpot($userId, $parkingSpotId, $startTime, $endTime) {
+    public static function getParkingSpotByNumberAndSector($number, $sector)
+    {
+        $sql = "SELECT ps.parking_spot_id FROM parking_spot ps WHERE ps.number = :num AND ps.sector = :sector;";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':num', $number);
+        $resultSet->bindParam(':sector', $sector);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $res = $resultSet->fetch(PDO::FETCH_ASSOC);
+
+        return $res['parking_spot_id'];
+    }
+
+    public static function reserveParkingSpot($userId, $sector, $number, $startTime, $endTime) {
+
+        $parkingSpotId = DatabaseQueries::getParkingSpotByNumberAndSector($number, $sector);
         
         $sql = 
         "INSERT INTO user_parking_spot_info VALUES (:userId, :parkingSpotId, :startTime, :endTime);";
