@@ -41,7 +41,7 @@ CREATE TABLE `parking_spot` (
     `number` int NOT NULL,
     `sector` VARCHAR(10) NOT NULL,
     PRIMARY KEY (`parking_spot_id`),
-    UNIQUE(`number`, `zone`)
+    UNIQUE(`number`, `sector`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE `users_courses`(
@@ -53,14 +53,12 @@ CREATE TABLE `users_courses`(
 );
 
 CREATE TABLE `user_parking_spot_info` (
-    `user_parking_info_id` int NOT NULL AUTO_INCREMENT,
     `user_id` int NOT NULL,
     `parking_spot_id` int NOT NULL,
-    `start_time` time NOT NULL,
-    `end_time` time NOT NULL,
-    PRIMARY KEY (user_parking_info_id),
+    `start_time` datetime NOT NULL,
+    `end_time` datetime NOT NULL-- ,
     FOREIGN KEY (parking_spot_id) REFERENCES parking_spot(parking_spot_id),
-    FOREIGN KEY (user_id) REFERENCES `user`(user_id),
+    FOREIGN KEY (user_id) REFERENCES `user`(user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 COMMIT;
