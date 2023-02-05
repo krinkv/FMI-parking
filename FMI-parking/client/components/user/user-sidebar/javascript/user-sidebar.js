@@ -17,10 +17,10 @@ function getUserName() {
     return fetch("../../../../server/controller/current_user.php", {
         method: "GET",
     })
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            return data;
-        })
+    .then((response) => {
+        return response.json();
+    })
+    .then((data) => {
+        return data;
+    })
 }
