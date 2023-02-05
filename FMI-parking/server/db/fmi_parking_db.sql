@@ -12,7 +12,6 @@ CREATE TABLE `user` (
     `first_name` varchar(255) NOT NULL,
     `last_name` varchar(255) NOT NULL,
     `email` varchar(255) NOT NULL UNIQUE,
-    `qrcode` varchar(255) NOT NULL UNIQUE,
     `password` varchar(255) NOT NULL,
     `status` enum('ADMIN', 'FULL_TIME_LECTURER', 'CONTRACT_LECTURER', 'RESTRICTED_ACESS') NOT NULL DEFAULT 'RESTRICTED_ACESS',
     `gender` enum('MALE', 'FEMALE') NOT NULL DEFAULT 'MALE',
