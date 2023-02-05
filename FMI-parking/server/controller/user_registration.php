@@ -1,6 +1,7 @@
 <?php 
 require_once("../repository/database_queries.php");
 require_once("../model/user.php");
+include("../qrcode/phpqrcode/qrlib.php");
 
 $input_data = file_get_contents("php://input");
 $user_data = json_decode($input_data, true); // validation
@@ -23,6 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
 
         $user = new User($userFirstname, $userLastname, $userEmail, $userPassword, $userStatus, $userGender, $userCarNumber);
+
+        $path = "../qrcode/generated/" . $userEmail;
+        $file = $path.".png";
+        $ecc = 'H';
+        $pixel_size = 20;
+        $frame_size = 5;
+        QRcode::png($userEmail, $file, $ecc, $pixel_size, $frame_size);
 
         DatabaseQueries::saveUser($user); // validation
 
