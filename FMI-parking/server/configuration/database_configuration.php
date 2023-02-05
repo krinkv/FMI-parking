@@ -3,7 +3,7 @@
 $configs = array(
     'host' => 'localhost',
     'username' => 'root',
-    'password' => "Chelsea1905-",
+    'password' => "",
     'database_name' => "fmi_parking",
 );
 
