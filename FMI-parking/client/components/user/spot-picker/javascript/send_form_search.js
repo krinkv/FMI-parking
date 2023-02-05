@@ -42,22 +42,22 @@
 
         colorButtons(
         [
-            { "zone": "A", "code": "2" },
-            { "zone": "A", "code": "3" },
-            { "zone": "A", "code": "5" },
+            { "sector": "A", "parking_spot_id": "2" },
+            { "sector": "A", "parking_spot_id": "3" },
+            { "sector": "A", "parking_spot_id": "5" },
         ],
         [
-            { "zone": "A", "code": "1" },
-            { "zone": "A", "code": "7" }
+            { "sector": "A", "parking_spot_id": "1" },
+            { "sector": "A", "parking_spot_id": "7" }
         ]
         );
-        createSearchParams(search_data["date"], search_data["start-time"], search_data["end-time"])
+        createSearchParams(search_data["date"], search_data["start-time"], search_data["end-time"]);
 
         getTakenSpots(search_data)
         .then((data) => { // recieves buttons to be colored in red
             if (data["status"] == "SUCCESS") {
-                colorButtons(data["taken_slots"], []]);
-                createSearchParams(search_data["date"], search_data["start-time"], search_data["end-time"])
+                colorButtons(data["taken_slots"], []);
+                createSearchParams(interval_data["date"], interval_data["start-time"], interval_data["end-time"])
             }
             else {
                 throw new Error(data["message"]);

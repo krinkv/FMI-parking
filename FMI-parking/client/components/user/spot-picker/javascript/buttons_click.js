@@ -59,10 +59,10 @@ function sendReservationData(button) {
     */
 
     let reservationInfo = {};
-    reservationInfo["button"] = button.textContent;
-    reservationInfo["date"] = selectedDate.textContent;
-    reservationInfo["start-time"] = selectedStart.textContent;
-    reservationInfo["end-time"] = selectedEnd.textContent;
+    reservationInfo["sector"] = button.textContent[0];
+    reservationInfo["number"] = parseInt(button.textContent.substring(1));
+    reservationInfo["start_time"] = getDateTimeFormatted(selectedDate, selectedStart);
+    reservationInfo["end_time"] = getDateTimeFormatted(selectedDate, selectedEnd);
 
     // make the reservation of the slot for the given interval
     makeReservation(reservationInfo)
@@ -85,9 +85,18 @@ function sendReservationData(button) {
     })
 }
 
+function getDateTimeFormatted(date, time) {
+    result = date + " ";
+    if (time.length == 1) {
+        time = "0" + time;
+    }
+    result += time + ":00:00";
+    return result;
+}
+
 // reserve the slot which the user has pressed for the given interval
 function makeReservation(reservationInfo) {
-    return fetch("../../backend/api/reserve_slots/reserve_slot.php", {
+    return fetch("../../../../server/controller/reserve_parking_spot.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
