@@ -18,10 +18,7 @@ let parkingStrs = [ "FMI", "FZF", "FHF" ];
 
 // Initally taken spots will be empty.
 // If we want them to match the initial/default time interval, we need to call endpoint here
-let takenSpots = [{"sector":"FMI", "number":3}, {"sector":"FMI", "number":5}, {"sector":"FHF", "number":2},
-{"sector":"FMI", "number":1}, {"sector":"FMI", "number":2}, {"sector":"FMI", "number":4},
-{"sector":"FMI", "number":6}, {"sector":"FMI", "number":7}, {"sector":"FMI", "number":8},
-{"sector":"FMI", "number":9}, {"sector":"FMI", "number":0}];
+let takenSpots = [];
 
 let curParkingIdx = 0;
 
@@ -41,9 +38,7 @@ window.onload = function loadMonth() {
     const lastMonthLimit = getDays(current.getFullYear(), current.getMonth() - 1);
     const thisMonthLimit = getDays(current.getFullYear(), current.getMonth());
 
-    console.log("last month limit " + lastMonthLimit);
     var firstMonthDay = startOfMonth(current).getDay();
-    console.log("first month day " + firstMonthDay);
     var index = lastMonthLimit - firstMonthDay + 1;
 
     const tbl = document.getElementById("table");
@@ -140,10 +135,11 @@ function reserveSpot() {
 
     reserveSpotRequest(reqData)
         .then((data) => {
+            updateTakenSpots();
         })
         .catch((errorMsg) => {
             console.log(errorMsg);
-        })
+        });
 }
 
 function updateTakenSpots() {
@@ -176,7 +172,6 @@ function drawParking() {
         (canvas.width / parkingImgs[curParkingIdx].width),
         (canvas.height / parkingImgs[curParkingIdx].height)
     ]
-
     takenSpots.forEach((takenSpot) => {
         if (takenSpot["sector"] != parkingStrs[curParkingIdx]) {
             return; // meaning continue in forEach()
@@ -240,7 +235,6 @@ function getTakenSpots(data) {
 }
 
 function reserveSpotRequest(data) {
-    console.log("reserveSpotRequest()");
     return fetch("../../../../server/controller/reserve_parking_spot.php", {
         method: "POST",
         headers: {
