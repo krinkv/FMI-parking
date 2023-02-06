@@ -254,4 +254,14 @@ class DatabaseQueries
 
         return $user;
     }
+
+    public static function updateUserStatus($mail, $status) {
+
+        $sql = "UPDATE user SET status = :st WHERE email = :em;";
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':st', $status);
+        $resultSet->bindParam(':em', $mail);
+        $resultSet->execute();
+    }
 }
