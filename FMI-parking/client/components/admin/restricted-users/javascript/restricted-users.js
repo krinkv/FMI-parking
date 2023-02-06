@@ -39,7 +39,7 @@ function addElement(user, index) {
     const blockedEl = document.createElement("td");
     var txt = "";
     var bl = "";
-    if (user.status === "RESTRICTED_ACCESS") {
+    if (user.status === "RESTRICTED_ACESS") {
         txt = "Да";
         bl = "Отблокирай";
     } else {
@@ -49,21 +49,12 @@ function addElement(user, index) {
     const blocked = document.createTextNode(txt);
     blockedEl.appendChild(blocked);
 
-    const actionEl = document.createElement("td");
-    actionEl.classList.add("btn");
-    const linkEl = document.createElement("a");
-    const btnTxt = document.createTextNode(bl);
-    // linkEl.href="#";
-    linkEl.appendChild(btnTxt);
-    actionEl.appendChild(linkEl);
-
     row.appendChild(emailEl);
     row.appendChild(firstNameEl);
     row.appendChild(lastNameEl);
     row.appendChild(blockedEl);
-    row.appendChild(actionEl);
 
-    if (index % 2 == 0) {
+    if (index % 2 == 1) {
         row.classList.add("active-row");
     } else {
         row.classList.add("not-active-row");
@@ -71,3 +62,45 @@ function addElement(user, index) {
 
     document.getElementById("table-body").appendChild(row);
   }
+
+  function changeStatus() {
+    const inputs = document.querySelectorAll("input, select"); // the input fields and the select one
+
+    let data = {};
+    inputs.forEach(input => {
+        data[input.name] = input.value;
+    })
+
+    sendFormData(data)
+            .then((responseMessage) => {
+                console.log(responseMessage);
+                if (responseMessage["status"] === "ERROR") {
+                    throw new Error(responseMessage["message"]);
+                }
+                else {
+                    // print successfull msg ! important               
+                }
+            })
+            .catch((errorMsg) => {
+                console.log(errorMsg); // create an error message if the server returned an error
+            })
+  }
+
+  function sendFormData(data) {
+    console.log(data);
+    return fetch("../../../../server/controller/restrict_user.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+        .then((response) => {
+            console.log(response);
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            return data;
+        })
+}
