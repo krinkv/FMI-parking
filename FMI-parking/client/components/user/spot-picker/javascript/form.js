@@ -34,7 +34,7 @@ function startOfMonth(date) {
 }
 
 window.onload = function loadMonth() {
-    setupCanvas(parkingImgs[curParkingIdx]);
+    drawParking();
     const DAYS = 7;
     const WEEKS = 5;
     const current = new Date();
@@ -77,7 +77,7 @@ window.onload = function loadMonth() {
     parkingOption.addEventListener("change", function() {
         console.log("parking changed");
         curParkingIdx = parkingOption.value - 1;
-        setupCanvas(parkingImgs[curParkingIdx]);
+        drawParking();
     });
 }
 
@@ -109,7 +109,6 @@ function showCalendar() {
         var id = document.querySelector(".dates").dataset.type;
         document.querySelector("#" + id).value = value + " Февруари, 2023";
         updateTakenSpots();
-        canvasPutCars();
     });
     
     var search = document.querySelector("#search");
@@ -117,27 +116,44 @@ function showCalendar() {
         document.querySelector(".booking").classList.add("is-sent");
         e.preventDefault();
     });
-}
 
-function setupCanvas(img) {
-    let canvas = document.querySelector('canvas');
-    let canvasCtx = canvas.getContext('2d');
-    canvasCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    canvasPutCars();
+    var beginHourOption = document.getElementById("begin-hour");
+    beginHourOption.addEventListener("change", function() {
+        updateTakenSpots();
+    });
+
+    var endHourOption = document.getElementById("end-hour");
+    endHourOption.addEventListener("change", function() {
+        updateTakenSpots();
+    });
 }
 
 function updateTakenSpots() {
-    console.log("updating canvas with checkin = ", checkin.value, " checkout = ", checkout.value);
-    let checkin = document.getElementById("checkin");
-    let checkout = document.getElementById("checkout");
+    let date = document.getElementById("checkin").value;
+    let begin_hour = document.getElementById("begin-hour").value;
+    let end_hour = document.getElementById("end-hour").value;
 
-    // TODO: convert checkin and checkout datetimes to the format that backend expects
-    takenSpots = getTakenSpots(/*convert*/checkin, /*convert*/checkout);
+    let start_time = getDateTimeForRequest(date, begin_hour);
+    let end_time = getDateTimeForRequest(date, end_hour);
+
+    let reqData = { "start_time" : start_time, "end_time" : end_time };
+
+    getTakenSpots(reqData)
+        .then((data) => {
+            takenSpots = data["taken_spots"];
+            drawParking();
+        })
+        .catch((errorMsg) => {
+            console.log(errorMsg);
+        })
 }
 
-function canvasPutCars() {
+function drawParking() {
     let canvas = document.querySelector('canvas');
     let canvasCtx = canvas.getContext('2d');
+    canvasCtx.drawImage(parkingImgs[curParkingIdx], 0, 0, canvas.width, canvas.height);
+
+    // Put cars on the taken spots
     let ratioCanvasToImg = [
         (canvas.width / parkingImgs[curParkingIdx].width),
         (canvas.height / parkingImgs[curParkingIdx].height)
@@ -156,7 +172,51 @@ function canvasPutCars() {
     });
 }
 
-function getTakenSpots(start_time, end_time) {
-    // TODO: call endpoint here
+function getMonthFromBulgarian(str) {
+    if (str == "Януари") return "01";
+    else if (str == "Февруари") return "02";
+    else if (str == "Март") return "03";
+    else if (str == "Април") return "04";
+    else if (str == "Май") return "05";
+    else if (str == "Юни") return "06";
+    else if (str == "Юли") return "07";
+    else if (str == "Август") return "08";
+    else if (str == "Септември") return "09";
+    else if (str == "Октомври") return "10";
+    else if (str == "Ноември") return "11";
+    else if (str == "Декември") return "12";
+    return "invalidmonth";
+}
+
+function getDateTimeForRequest(date, time) {
+    let dateParts = date.split(" ");
+    let day = dateParts[0];
+    if (day.length == 1) {
+        day = "0" + day;
+    }
+    let month = getMonthFromBulgarian(dateParts[1].slice(0,-1));
+    let year = dateParts[2];
+
+    let datetime = year + "-" + month + "-" + day + " " + time;
+    return datetime;
+}
+
+function getTakenSpotsTestData() {
     return [{"sector":"FMI", "number":3}, {"sector":"FMI", "number":5}, {"sector":"FHF", "number":2}];
+}
+
+function getTakenSpots(data) {
+    return fetch("../../../../server/controller/taken_parking_spots.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    .then((response) => {
+        return response.json();
+    })
+    .then((data) => {
+        return data;
+    })
 }
