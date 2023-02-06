@@ -250,8 +250,8 @@ class DatabaseQueries
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->execute(); // Think how to handle errors !!!
-        $user = $resultSet->fetch(PDO::FETCH_ASSOC);
+        $user = $resultSet->fetchAll(PDO::FETCH_ASSOC);
 
-        return $res;
+        return $user;
     }
 }
