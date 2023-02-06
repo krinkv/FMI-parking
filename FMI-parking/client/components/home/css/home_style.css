@@ -19,6 +19,16 @@ a:hover {
     color: #1abc9c;
 }
 
+.img-mot {
+    height: 250px;
+    weight: 250px:
+}
+
+p {
+    font-weight: bold;
+    font-size: 60px;
+}
+
 li:hover {
     color: #1abc9c;
 }
