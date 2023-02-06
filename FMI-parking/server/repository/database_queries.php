@@ -140,11 +140,10 @@ class DatabaseQueries
     public static function getTakenSpotsInTimeRange($startTime, $endTime) {
         
         $sql = 
-        "SELECT ps.number, ps.sector from parking_spot ps 
+        "SELECT ps.number, ps.sector, upsi.user_id from parking_spot ps
         LEFT JOIN user_parking_spot_info upsi ON ps.parking_spot_id = upsi.parking_spot_id
-        WHERE upsi.parking_spot_id is not NULL AND 
-            ((upsi.start_time <= :startTime AND upsi.end_time > :startTime) OR
-            (upsi.start_time < :endTime AND upsi.end_time >= :endTime))
+        WHERE upsi.parking_spot_id is not NULL AND
+            NOT (upsi.end_time <= :startTime OR upsi.start_time >= :endTime)
         GROUP BY ps.parking_spot_id, ps.sector;";
 
         $connection = getDatabaseConnection();
@@ -166,6 +165,16 @@ class DatabaseQueries
             }
         }
         return true;
+    }
+
+    public static function doesUserHaveReservationForTimeSlot($userId, $startTime, $endTime) {
+        $takenSpots = DatabaseQueries::getTakenSpotsInTimeRange($startTime, $endTime);
+        foreach($takenSpots as $spot) {
+            if ($spot["user_id"] == $userId) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static function getParkingSpotByNumberAndSector($number, $sector)

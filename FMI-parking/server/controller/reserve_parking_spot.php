@@ -22,6 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(json_encode(["status" => "ERROR", "message" => "Мястото не е свободно за това време !"]));
     }
 
+    $has_reservation = DatabaseQueries::doesUserHaveReservationForTimeSlot($user->getUserId(), $input_data["start_time"],  $input_data["end_time"]);
+    if ($has_reservation) {
+        http_response_code(401);
+        exit(json_encode(["status" => "ERROR", "message" => "Потребителят вече има запазено място в това време !"]));
+    }
+
     $d1 = new DateTime($input_data["start_time"]);
     $d2 = new DateTime($input_data["end_time"]);
 
