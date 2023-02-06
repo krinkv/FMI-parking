@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Style HTML Tables with CSS</title>
+    <link rel="stylesheet" href="css/restricted-users.css">
+    <link rel="stylesheet" href="../admin-sidebar/css/admin-sidebar.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div class="content">
+        <table class="content-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Първо име</th>
+                <th>Фамилно име</th>
+                <th>Блокиран</th>
+                <th>Действие</th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            <tr>
+                <td>1</td>
+                <td>Domenic</td>
+                <td>88,110</td>
+                <td>dcode</td>
+                <td class="btn"><a href="#">Блокирай</a></td>
+            </tr>
+            <tr class="active-row">
+                <td>2</td>
+                <td>Sally</td>
+                <td>72,400</td>
+                <td>Students</td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
+</body>
+<script>
+    $(function(){
+        $("#sidebar-placeholder").load("../admin-sidebar/admin-sidebar.html");
+    });
+</script>
+</html>
+
