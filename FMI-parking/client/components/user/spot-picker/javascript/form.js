@@ -1,17 +1,16 @@
 // TODO: create legit images
-let fmiImg = new Image();
-fmiImg.src = "./images/fmi.png";
-let fhfImg = new Image();
-fhfImg.src = "./images/fhf.png";
-let fzfImg = new Image();
-fzfImg.src = "./images/fzf.png";
+let parkingImgs = [ new Image(), new Image(), new Image() ];
+parkingImgs[0].src = "./images/fmi.png";
+parkingImgs[1].src = "./images/fhf.png";
+parkingImgs[2].src = "./images/fzf.png";
 let carImg = new Image();
-carImg.src = "./images/car.png";
+carImg.src = "./images/car-v-red.png";
+let carDrawWidth = 60;
 // Coordinates of where car images should be positioned inside each parking image to indicate that a particular spot is taken
 // Example: Spot 6 in sector 1 (FMI parking) is taken means that a car image should be placed on position parkingImgSpots[0][5]
 // TODO: fill with legit data
 let parkingImgSpots = [
-    [ [120,260],[160,260],[210,260],[270,260],[340,260],[400,260],[490,260],[580,260],[650,260],[720,260] ],
+    [ [126,346],[242,346],[356,346],[472,346],[590,346],[708,346],[822,346],[940,346],[1055,346],[1172,346] ],
     [ [120,260],[160,260],[210,260],[270,260],[340,260],[400,260],[490,260],[580,260],[650,260],[720,260] ],
     [ [120,260],[160,260],[210,260],[270,260],[340,260],[400,260],[490,260],[580,260],[650,260],[720,260] ]
 ];
@@ -19,7 +18,10 @@ let parkingStrs = [ "FMI", "FZF", "FHF" ];
 
 // Initally taken spots will be empty.
 // If we want them to match the initial/default time interval, we need to call endpoint here
-let takenSpots = [{"sector":"FMI", "number":3}, {"sector":"FMI", "number":5}, {"sector":"FHF", "number":2}];
+let takenSpots = [{"sector":"FMI", "number":3}, {"sector":"FMI", "number":5}, {"sector":"FHF", "number":2},
+{"sector":"FMI", "number":1}, {"sector":"FMI", "number":2}, {"sector":"FMI", "number":4},
+{"sector":"FMI", "number":6}, {"sector":"FMI", "number":7}, {"sector":"FMI", "number":8},
+{"sector":"FMI", "number":9}, {"sector":"FMI", "number":10}];
 
 let curParkingIdx = 0;
 
@@ -32,7 +34,7 @@ function startOfMonth(date) {
 }
 
 window.onload = function loadMonth() {
-    setupCanvas(fmiImg);
+    setupCanvas(parkingImgs[curParkingIdx]);
     const DAYS = 7;
     const WEEKS = 5;
     const current = new Date();
@@ -75,15 +77,7 @@ window.onload = function loadMonth() {
     parkingOption.addEventListener("change", function() {
         console.log("parking changed");
         curParkingIdx = parkingOption.value - 1;
-        if (curParkingIdx == 0) {
-            setupCanvas(fmiImg);
-        }
-        else if (curParkingIdx == 1) {
-            setupCanvas(fzfImg);
-        }
-        else if (curParkingIdx == 2) {
-            setupCanvas(fhfImg);
-        }
+        setupCanvas(parkingImgs[curParkingIdx]);
     });
 }
 
@@ -144,14 +138,21 @@ function updateTakenSpots() {
 function canvasPutCars() {
     let canvas = document.querySelector('canvas');
     let canvasCtx = canvas.getContext('2d');
+    let ratioCanvasToImg = [
+        (canvas.width / parkingImgs[curParkingIdx].width),
+        (canvas.height / parkingImgs[curParkingIdx].height)
+    ]
 
     takenSpots.forEach((takenSpot) => {
         if (takenSpot["sector"] != parkingStrs[curParkingIdx]) {
             return; // meaning continue in forEach()
         }
         let spotNumber = takenSpot["number"];
-        let carPosition = parkingImgSpots[curParkingIdx][spotNumber - 1];
-        canvasCtx.drawImage(carImg, carPosition[0], carPosition[1], 140, 100);
+        let carPositionX = parkingImgSpots[curParkingIdx][spotNumber - 1][0];
+        let carPositionY = parkingImgSpots[curParkingIdx][spotNumber - 1][1];
+        carPositionX *= ratioCanvasToImg[0];
+        carPositionY *= ratioCanvasToImg[1];
+        canvasCtx.drawImage(carImg, carPositionX, carPositionY, carDrawWidth, carDrawWidth * (carImg.height / carImg.width));
     });
 }
 
