@@ -73,6 +73,7 @@ function showCalendar() {
         document.querySelector(".calendar").style.display = "none";
         var id = document.querySelector(".dates").dataset.type;
         document.querySelector("#" + id).value = value + " Февруари, 2023";
+        updateCanvas();
     });
     
     var search = document.querySelector("#search");
@@ -80,4 +81,10 @@ function showCalendar() {
         document.querySelector(".booking").classList.add("is-sent");
         e.preventDefault();
     });
+}
+
+function updateCanvas() {
+    let checkin = document.getElementById("checkin");
+    let checkout = document.getElementById("checkout");
+    console.log("updating canvas with checkin = ", checkin.value, " checkout = ", checkout.value);
 }
