@@ -90,11 +90,13 @@ body {
 
 .date-day {
     display: inline;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 100;
-    color: white;
+    color: #2c3e50;
+    font-weight: bold;
     position: relative;
     left: 10px;
+    margin-top: 5px;
 }
 
 .time-marker {
