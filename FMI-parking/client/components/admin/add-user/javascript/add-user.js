@@ -5,7 +5,7 @@ window.addEventListener('load', function() {
 function authenticate() {
     if (document.cookie == null) {
         window.location.replace("../../../login/login.html");
-    }        
+    }
 
     getAuthDetails().then((response) => {
         if (response.role != "ADMIN") {
@@ -43,7 +43,7 @@ function addUser() {
                     throw new Error(responseMessage["message"]);
                 }
                 else {
-                    // print successfull msg ! important               
+                    showDiv(responseDiv, "Успешна регистрация!");
                 }
             })
             .catch((errorMsg) => {
@@ -81,14 +81,8 @@ function getAuthDetails() {
     })
 }
 
-function showDiv(div, message) {
+function showDiv(div, message, isError) {
     div.innerHTML = null;
-    // create the image of the error (a white exclamation mark)
-    let statusImage = document.createElement("img");
-
-    // attach image attributes src and alt
-    statusImage.src = "./images/error_response.png";
-    statusImage.alt = "white exclamation mark on red background";
 
     // toggle classes
     div.classList.add("error");
@@ -101,6 +95,5 @@ function showDiv(div, message) {
     messageContainer.appendChild(responseMessage);
 
     // append all created elements to the response div
-    div.appendChild(statusImage);
     div.appendChild(messageContainer);
 }
