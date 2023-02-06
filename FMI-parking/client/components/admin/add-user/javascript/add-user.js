@@ -1,21 +1,3 @@
-window.addEventListener('load', function() {
-    authenticate();
-});
-
-function authenticate() {
-    if (document.cookie == null) {
-        window.location.replace("../../../login/login.html");
-    }
-
-    getAuthDetails().then((response) => {
-        if (response.role != "ADMIN") {
-            window.location.replace("../../home/home.html");
-        }
-    })
-    .catch((errorMessage) => {
-        console.log(errorMessage);
-    });
-}
 
 function addUser() {
 
