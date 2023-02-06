@@ -61,7 +61,7 @@ $(window).load(function() {
     getNumberTakenSpots(stu_payload).then(function(num) {
         $("h2#stu-count").html(num);
     });
-    getNumberTakenSpots().then(function(num) {
+    getNumberFreeSpots().then(function(num) {
         $("h2#free-count").html(num);
     });
 });
