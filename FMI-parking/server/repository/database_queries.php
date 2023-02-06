@@ -165,7 +165,7 @@ class DatabaseQueries
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     public static function getParkingSpotByNumberAndSector($number, $sector)

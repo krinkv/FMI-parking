@@ -21,7 +21,7 @@ let parkingStrs = [ "FMI", "FZF", "FHF" ];
 let takenSpots = [{"sector":"FMI", "number":3}, {"sector":"FMI", "number":5}, {"sector":"FHF", "number":2},
 {"sector":"FMI", "number":1}, {"sector":"FMI", "number":2}, {"sector":"FMI", "number":4},
 {"sector":"FMI", "number":6}, {"sector":"FMI", "number":7}, {"sector":"FMI", "number":8},
-{"sector":"FMI", "number":9}, {"sector":"FMI", "number":10}];
+{"sector":"FMI", "number":9}, {"sector":"FMI", "number":0}];
 
 let curParkingIdx = 0;
 
@@ -75,7 +75,6 @@ window.onload = function loadMonth() {
 
     var parkingOption = document.getElementById("parking-option");
     parkingOption.addEventListener("change", function() {
-        console.log("parking changed");
         curParkingIdx = parkingOption.value - 1;
         drawParking();
     });
@@ -110,12 +109,6 @@ function showCalendar() {
         document.querySelector("#" + id).value = value + " Февруари, 2023";
         updateTakenSpots();
     });
-    
-    var search = document.querySelector("#search");
-    search.addEventListener("click", function(e) {
-        document.querySelector(".booking").classList.add("is-sent");
-        e.preventDefault();
-    });
 
     var beginHourOption = document.getElementById("begin-hour");
     beginHourOption.addEventListener("change", function() {
@@ -126,6 +119,31 @@ function showCalendar() {
     endHourOption.addEventListener("change", function() {
         updateTakenSpots();
     });
+}
+
+function reserveSpot() {
+    let date = document.getElementById("checkin").value;
+    let begin_hour = document.getElementById("begin-hour").value;
+    let end_hour = document.getElementById("end-hour").value;
+    let start_time = getDateTimeForRequest(date, begin_hour);
+    let end_time = getDateTimeForRequest(date, end_hour);
+    let parking_option = document.getElementById("parking-option").value;
+    let number = document.getElementById("number-option").value;
+    let sector = parkingStrs[parking_option - 1];
+
+    let reqData = {
+        "start_time" : start_time,
+        "end_time" : end_time,
+        "sector" : sector,
+        "number" : number
+    };
+
+    reserveSpotRequest(reqData)
+        .then((data) => {
+        })
+        .catch((errorMsg) => {
+            console.log(errorMsg);
+        })
 }
 
 function updateTakenSpots() {
@@ -164,8 +182,8 @@ function drawParking() {
             return; // meaning continue in forEach()
         }
         let spotNumber = takenSpot["number"];
-        let carPositionX = parkingImgSpots[curParkingIdx][spotNumber - 1][0];
-        let carPositionY = parkingImgSpots[curParkingIdx][spotNumber - 1][1];
+        let carPositionX = parkingImgSpots[curParkingIdx][spotNumber][0];
+        let carPositionY = parkingImgSpots[curParkingIdx][spotNumber][1];
         carPositionX *= ratioCanvasToImg[0];
         carPositionY *= ratioCanvasToImg[1];
         canvasCtx.drawImage(carImg, carPositionX, carPositionY, carDrawWidth, carDrawWidth * (carImg.height / carImg.width));
@@ -207,6 +225,23 @@ function getTakenSpotsTestData() {
 
 function getTakenSpots(data) {
     return fetch("../../../../server/controller/taken_parking_spots.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    .then((response) => {
+        return response.json();
+    })
+    .then((data) => {
+        return data;
+    })
+}
+
+function reserveSpotRequest(data) {
+    console.log("reserveSpotRequest()");
+    return fetch("../../../../server/controller/reserve_parking_spot.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
