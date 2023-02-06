@@ -1,3 +1,10 @@
+let fmiImg = new Image();
+fmiImg.src = "./images/fmi.png";
+let fhfImg = new Image();
+fhfImg.src = "./images/fhf.png";
+let fzfImg = new Image();
+fzfImg.src = "./images/fzf.png";
+
 const getDays = (year, month) => {
     return new Date(year, month, 0).getDate();
 };
@@ -7,6 +14,7 @@ function startOfMonth(date) {
 }
 
 window.onload = function loadMonth() {
+    setupCanvas();
     const DAYS = 7;
     const WEEKS = 5;
     const current = new Date();
@@ -84,8 +92,9 @@ function showCalendar() {
 }
 
 function setupCanvas() {
-    var canvas = document.querySelector('canvas');
-    var ctx = canvas.getContext('2d');
+    let canvas = document.querySelector('canvas');
+    let canvasCtx = canvas.getContext('2d');
+    canvasCtx.drawImage(fmiImg, 0, 0, canvas.width, canvas.height);
 }
 
 function updateCanvas() {
