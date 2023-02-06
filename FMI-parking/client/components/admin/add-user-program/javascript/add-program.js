@@ -66,17 +66,7 @@ function createOptions(startHour, endHourSelect) {
 }
 
 function addProgram() {
-    const form = document.getElementById("add-program-form"); // the registration form
     const inputs = document.querySelectorAll("input, select"); // the input fields and the select one
-    const responseDiv = document.getElementById("fail-input-err-msg"); // the div that will contain the error message if the backend returned an error
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // prevent the form from resetting
-
-        // remove styles from last error message
-        responseDiv.classList.remove("error");
-
-        // remove last error message
-        responseDiv.innerHTML = null;
 
         // gather all the input information
         let data = {};
@@ -91,14 +81,13 @@ function addProgram() {
                 else {
                     var successDiv = document.getElementById("success-response");
                     var successResponse = document.createElement("p");
-                    successResponse.innerHTML = "Success baby";
+                    successResponse.innerHTML = "Успешно въвеждане";
                     successDiv.appendChild(successResponse);
                 }
             })
             .catch((errorMsg) => {
-                showDiv(responseDiv, errorMsg); // create an error message if the server returned an error
+                console.log(errorMsg);
             })
-    })
 };
 
 /* send the inputted data over to the backend and based on the server's response, display an error message or redirect user to his newly created account */
