@@ -1,9 +1,27 @@
+// TODO: create legit images
 let fmiImg = new Image();
 fmiImg.src = "./images/fmi.png";
 let fhfImg = new Image();
 fhfImg.src = "./images/fhf.png";
 let fzfImg = new Image();
 fzfImg.src = "./images/fzf.png";
+let carImg = new Image();
+carImg.src = "./images/car.png";
+// Coordinates of where car images should be positioned inside each parking image to indicate that a particular spot is taken
+// Example: Spot 6 in sector 1 (FMI parking) is taken means that a car image should be placed on position parkingImgSpots[0][5]
+// TODO: fill with legit data
+let parkingImgSpots = [
+    [ [120,260],[160,260],[210,260],[270,260],[340,260],[400,260],[490,260],[580,260],[650,260],[720,260] ],
+    [ [120,260],[160,260],[210,260],[270,260],[340,260],[400,260],[490,260],[580,260],[650,260],[720,260] ],
+    [ [120,260],[160,260],[210,260],[270,260],[340,260],[400,260],[490,260],[580,260],[650,260],[720,260] ]
+];
+let parkingStrs = [ "FMI", "FZF", "FHF" ];
+
+// Initally taken spots will be empty.
+// If we want them to match the initial/default time interval, we need to call endpoint here
+let takenSpots = [{"sector":"FMI", "number":3}, {"sector":"FMI", "number":5}, {"sector":"FHF", "number":2}];
+
+let curParkingIdx = 0;
 
 const getDays = (year, month) => {
     return new Date(year, month, 0).getDate();
@@ -56,15 +74,16 @@ window.onload = function loadMonth() {
     var parkingOption = document.getElementById("parking-option");
     parkingOption.addEventListener("change", function() {
         console.log("parking changed");
-        let parkingIdx = parkingOption.value;
-        let img = fmiImg;
-        if (parkingIdx == 2) {
-            img = fzfImg;
+        curParkingIdx = parkingOption.value - 1;
+        if (curParkingIdx == 0) {
+            setupCanvas(fmiImg);
         }
-        else if (parkingIdx == 3) {
-            img = fhfImg;
+        else if (curParkingIdx == 1) {
+            setupCanvas(fzfImg);
         }
-        setupCanvas(img);
+        else if (curParkingIdx == 2) {
+            setupCanvas(fhfImg);
+        }
     });
 }
 
@@ -95,7 +114,8 @@ function showCalendar() {
         document.querySelector(".calendar").style.display = "none";
         var id = document.querySelector(".dates").dataset.type;
         document.querySelector("#" + id).value = value + " Февруари, 2023";
-        updateCanvas();
+        updateTakenSpots();
+        canvasPutCars();
     });
     
     var search = document.querySelector("#search");
@@ -109,10 +129,33 @@ function setupCanvas(img) {
     let canvas = document.querySelector('canvas');
     let canvasCtx = canvas.getContext('2d');
     canvasCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    canvasPutCars();
 }
 
-function updateCanvas() {
+function updateTakenSpots() {
+    console.log("updating canvas with checkin = ", checkin.value, " checkout = ", checkout.value);
     let checkin = document.getElementById("checkin");
     let checkout = document.getElementById("checkout");
-    console.log("updating canvas with checkin = ", checkin.value, " checkout = ", checkout.value);
+
+    // TODO: convert checkin and checkout datetimes to the format that backend expects
+    takenSpots = getTakenSpots(/*convert*/checkin, /*convert*/checkout);
+}
+
+function canvasPutCars() {
+    let canvas = document.querySelector('canvas');
+    let canvasCtx = canvas.getContext('2d');
+
+    takenSpots.forEach((takenSpot) => {
+        if (takenSpot["sector"] != parkingStrs[curParkingIdx]) {
+            return; // meaning continue in forEach()
+        }
+        let spotNumber = takenSpot["number"];
+        let carPosition = parkingImgSpots[curParkingIdx][spotNumber - 1];
+        canvasCtx.drawImage(carImg, carPosition[0], carPosition[1], 140, 100);
+    });
+}
+
+function getTakenSpots(start_time, end_time) {
+    // TODO: call endpoint here
+    return [{"sector":"FMI", "number":3}, {"sector":"FMI", "number":5}, {"sector":"FHF", "number":2}];
 }
