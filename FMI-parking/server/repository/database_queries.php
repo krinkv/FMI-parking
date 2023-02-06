@@ -158,25 +158,14 @@ class DatabaseQueries
     }
 
     public static function isSpotFreeForTimeSlot($sector, $number, $startTime, $endTime) {
-        
-        $sql = 
-        "SELECT ps.parking_spot_id from parking_spot ps 
-                LEFT JOIN user_parking_spot_info upsi ON ps.parking_spot_id = upsi.parking_spot_id
-                WHERE ((upsi.parking_spot_id is NULL)
-                OR NOT ((upsi.start_time <= :startTime AND upsi.end_time > :startTime) OR
-                        (upsi.start_time < :endTime AND upsi.end_time >= :endTime)))
-                AND ps.sector = :sector AND ps.number = :num;";
 
-        $connection = getDatabaseConnection();
-        $resultSet = $connection->prepare($sql);
-        $resultSet->bindParam(':startTime', $startTime);
-        $resultSet->bindParam(':endTime', $endTime);
-        $resultSet->bindParam(':sector', $sector);
-        $resultSet->bindParam(':num', $number);
-        $resultSet->execute(); // Think how to handle errors !!!
-        $result = $resultSet->fetchAll(PDO::FETCH_ASSOC);
-
-        return !empty($result);
+        $takenSpots = DatabaseQueries::getTakenSpotsInTimeRange($startTime, $endTime);
+        foreach($takenSpots as $spot) {
+            if ($spot["number"] == $number && $spot["sector"]) {
+                return false;
+            }
+        }
+        return false;
     }
 
     public static function getParkingSpotByNumberAndSector($number, $sector)
@@ -231,5 +220,25 @@ class DatabaseQueries
         $resultSet2->bindParam(':courseId', $courseId);
         $resultSet2->bindParam(':userId', $userId);
         $resultSet2->execute();
+    }
+
+    public static function userHasSubjectInTimeRange($userId, $start_time, $end_time){
+        $program = DatabaseQueries::getUserProgram($userId);
+
+        foreach ($program as $subject) {
+            $start = new DateTime($subject["start_time"]);
+            $end = new DateTime($subject["end_time"]);
+
+            $start->modify('-30 minutes');
+            $end->modify('+30 minutes');
+
+            exit(json_encode(["start" => $start, "end" => end]));
+
+            if ($start_time >= $start && $end_time <= $end) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

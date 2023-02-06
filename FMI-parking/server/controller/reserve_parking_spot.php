@@ -30,6 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(json_encode(["status" => "ERROR", "message" => "Началният час трябва да е преди крайния !"]));
     }
 
+    if($user->getStatus() != "FULL_TIME_LECTURER") {
+        
+        if(!DatabaseQueries::userHasSubjectInTimeRange($user->getUserId(), $d1, $d2)) {
+            http_response_code(401);
+            exit(json_encode(["status" => "ERROR", "message" => "Потребителят няма право да си резервира място по това време !"]));
+        }
+    }
+
     DatabaseQueries::reserveParkingSpot($user->getUserId(), $input_data["sector"], $input_data["number"], $input_data["start_time"], $input_data["end_time"]);
 
     http_response_code(200);
