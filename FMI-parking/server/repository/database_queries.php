@@ -140,7 +140,7 @@ class DatabaseQueries
     public static function getTakenSpotsInTimeRange($startTime, $endTime) {
         
         $sql = 
-        "SELECT ps.parking_spot_id, ps.sector from parking_spot ps 
+        "SELECT ps.number, ps.sector from parking_spot ps 
         LEFT JOIN user_parking_spot_info upsi ON ps.parking_spot_id = upsi.parking_spot_id
         WHERE upsi.parking_spot_id is not NULL AND 
             ((upsi.start_time <= :startTime AND upsi.end_time > :startTime) OR
@@ -157,28 +157,34 @@ class DatabaseQueries
         return $result;
     }
 
-    public static function isSpotFreeForTimeSlot($spotId, $startTime, $endTime) {
-        
-        $sql = 
-        "SELECT ps.parking_spot_id from parking_spot ps 
-                LEFT JOIN user_parking_spot_info upsi ON ps.parking_spot_id = upsi.parking_spot_id
-                WHERE ((upsi.parking_spot_id is NULL)
-                OR NOT ((upsi.start_time <= :startTime AND upsi.end_time > :startTime) OR
-                        (upsi.start_time < :endTime AND upsi.end_time >= :endTime)))
-                AND ps.parking_spot_id = :spotId;";
+    public static function isSpotFreeForTimeSlot($sector, $number, $startTime, $endTime) {
+
+        $takenSpots = DatabaseQueries::getTakenSpotsInTimeRange($startTime, $endTime);
+        foreach($takenSpots as $spot) {
+            if ($spot["number"] == $number && $spot["sector"] == $sector) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static function getParkingSpotByNumberAndSector($number, $sector)
+    {
+        $sql = "SELECT ps.parking_spot_id FROM parking_spot ps WHERE ps.number = :num AND ps.sector = :sector;";
 
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
-        $resultSet->bindParam(':startTime', $startTime);
-        $resultSet->bindParam(':endTime', $endTime);
-        $resultSet->bindParam(':spotId', $spotId);
+        $resultSet->bindParam(':num', $number);
+        $resultSet->bindParam(':sector', $sector);
         $resultSet->execute(); // Think how to handle errors !!!
-        $result = $resultSet->fetchAll(PDO::FETCH_ASSOC);
+        $res = $resultSet->fetch(PDO::FETCH_ASSOC);
 
-        return !empty($result);
+        return $res['parking_spot_id'];
     }
 
-    public static function reserveParkingSpot($userId, $parkingSpotId, $startTime, $endTime) {
+    public static function reserveParkingSpot($userId, $sector, $number, $startTime, $endTime) {
+
+        $parkingSpotId = DatabaseQueries::getParkingSpotByNumberAndSector($number, $sector);
         
         $sql = 
         "INSERT INTO user_parking_spot_info VALUES (:userId, :parkingSpotId, :startTime, :endTime);";
@@ -214,5 +220,38 @@ class DatabaseQueries
         $resultSet2->bindParam(':courseId', $courseId);
         $resultSet2->bindParam(':userId', $userId);
         $resultSet2->execute();
+    }
+
+    public static function userHasSubjectInTimeRange($userId, $start_time, $end_time){
+        $program = DatabaseQueries::getUserProgram($userId);
+
+        foreach ($program as $subject) {
+            $start = new DateTime($subject["start_time"]);
+            $end = new DateTime($subject["end_time"]);
+
+            $start->modify('-30 minutes');
+            $end->modify('+30 minutes');
+
+            exit(json_encode(["start" => $start, "end" => end]));
+
+            if ($start_time >= $start && $end_time <= $end) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function getAllUsers()
+    {
+        $table = "user";
+        $sql = "SELECT first_name, last_name, email, `status` FROM $table;";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $user = $resultSet->fetch(PDO::FETCH_ASSOC);
+
+        return $res;
     }
 }

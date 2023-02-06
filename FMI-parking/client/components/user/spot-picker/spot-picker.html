@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/spot-picker.css">
+    <link rel="stylesheet" href="../user-sidebar/css/user-sidebar.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script defer src="../user-sidebar/javascript/user-sidebar.js"></script>
+    <script src="./javascript/form.js"></script>  
+    <title>Save slot</title>
+</head>
+<body>
+<div id="user-sidebar-placeholder"></div>
+<div class="content">
+	<div class="spot-picker-layout">
+		<div class="parking-picture">
+			<canvas width=900 height=500></canvas>
+		</div>
+		<div class="book-form">	
+			<div id="overlay"></div>
+			<div class="container calendar">
+				<div class="header">
+					<div class="icon arr prev"></div>
+					<div class="month">Февруари 2023</div>
+					<div class="icon arr next"></div>
+				</div>
+				<table id="table">
+					<tr>
+						<th>Нед</th><th>Пон</th><th>Вт</th><th>Ср</th><th>Четв</th><th>Пет</th><th>Съб</th>
+					</tr>
+				</table>
+				<button class="button-big" id="add_event">Запази</button>
+			</div>
+
+
+			<form action="" class="container booking" name="booking">
+				<div class="header">
+					<div>
+						<h2>ФМИ</h2>
+					</div>
+				</div>
+				
+				<div class="dates" data-type="none">
+					<label for="checkin">Дата</label>
+					<div class="input-text">
+						<input type="datetime" value="" id="checkin" readonly>
+						<div class="icon pop-up" onclick="showCalendar()"></div>
+					</div>
+				</div>
+				
+				<ul class="persons temp">
+					<li>
+						<label>Начален час</label>
+						<div class="input-text">
+							<select name="startTime" id="begin-hour">
+								<option value="09:00:00">09:00</option>
+								<option value="10:00:00">10:00</option>
+								<option value="11:00:00">11:00</option>
+								<option value="12:00:00">12:00</option>
+								<option value="13:00:00">13:00</option>
+								<option value="14:00:00">14:00</option>
+								<option value="15:00:00">15:00</option>
+								<option value="16:00:00">16:00</option>
+								<option value="17:00:00">17:00</option>
+							</select>
+							<div class="icon"></div>
+						</div>
+					</li>
+					<li>
+						<label>Краен час</label>
+						<div class="input-text">
+							<select name="endTime" id="end-hour">
+								<option value="10:00:00">10:00</option>
+								<option value="11:00:00">11:00</option>
+								<option value="12:00:00">12:00</option>
+								<option value="13:00:00">13:00</option>
+								<option value="14:00:00">14:00</option>
+								<option value="15:00:00">15:00</option>
+								<option value="16:00:00">16:00</option>
+								<option value="17:00:00">17:00</option>
+								<option value="18:00:00">18:00</option>
+							</select>
+							<div class="icon"></div>
+						</div>
+					</li>
+				</ul>
+
+				<ul class="persons temp">
+					<li>
+						<label>Зона</label>
+						<div class="input-text">
+							<select id="parking-option">
+								<option value="1">ФМИ</option>
+								<option value="2">ФЗФ</option>
+								<option value="3">ФХФ</option>
+							</select>
+							<div class="icon"></div>
+						</div>
+					</li>
+					<li>
+						<label>Номер</label>
+						<div class="input-text">
+							<select id="number-option">
+								<option value="0">0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+							</select>
+							<div class="icon"></div>
+						</div>
+					</li>
+				</ul>
+
+				<button type="button" class="button-big" id="search" onclick="reserveSpot()"><div class="icon"></div>Запази място</button>
+			</form>
+		</div>
+	</div>	
+</div>
+</body>
+<script>
+    $(function(){
+        $("#user-sidebar-placeholder").load("../user-sidebar/user-sidebar.html");
+    });
+</script>
+
+</html>
