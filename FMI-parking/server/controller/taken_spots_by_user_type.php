@@ -3,7 +3,7 @@ require_once("../repository/database_queries.php");
 
 $input_data = json_decode(file_get_contents("php://input"), true);
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $type = $input_data["user_type"];
     $count = DatabaseQueries::getNumberOfTakenSpotsNowByUserType($type);
 
