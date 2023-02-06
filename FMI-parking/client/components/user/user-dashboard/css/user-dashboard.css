@@ -6,7 +6,7 @@ body {
 
 .content {
     background-color: rgb(241, 242, 247);
-    margin-left: 240px;
+    margin-left: 20px;
     /*margin-top: -20px;*/
     /*margin-right: -5px;*/
     height: 100%;
@@ -20,6 +20,7 @@ body {
     display: flex;
     flex-direction: row;
     text-align: center;
+    justify-content: center;
 }
 
 .for-us-column {
@@ -71,6 +72,10 @@ body {
 
 .stu-color {
     color: rgb(252, 173, 151);
+}
+
+.free-color {
+    color: #2E42B9;
 }
 
 .box-data {
