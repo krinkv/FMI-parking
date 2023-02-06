@@ -5,15 +5,15 @@ parkingImgs[1].src = "./images/fzf.png";
 parkingImgs[2].src = "./images/fhf.png";
 let carImgs = [ new Image(), new Image(), new Image() ];
 carImgs[0].src = "./images/car-v-red.png";
-carImgs[1].src = "./images/car-v-red.png";
-carImgs[2].src = "./images/car-h-red.png";
+carImgs[1].src = "./images/car-hl-red.png";
+carImgs[2].src = "./images/car-hr-red.png";
 // Coordinates of where car images should be positioned inside each parking image to indicate that a particular spot is taken
 // Example: Spot 6 in sector 1 (FMI parking) is taken means that a car image should be placed on position parkingImgSpots[0][5]
 // TODO: fill with legit data
 let parkingImgSpots = [
-    [ [126,346],[242,346],[356,346],[472,346],[590,346],[708,346],[822,346],[940,346],[1055,346],[1172,346], /*carDrawWidth*/60 ],
-    [ [120,260],[160,260],[210,260],[270,260],[340,260],[400,260],[490,260],[580,260],[650,260],[720,260], /*carDrawWidth*/60 ],
-    [ [950,68],[950,161],[950,247],[950,336],[950,421],[950,508],[950,596],[950,682],[950,772],[950,856], /*carDrawWidth*/60 ]
+    [ [126,346,0],[242,346,0],[356,346,0],[472,346,0],[590,346,0],[708,346,0],[822,346,0],[940,346,0],[1055,346,0],[1172,346,0], /*carDrawWidth*/60 ],
+    [ [940,68,1],[940,190,1],[940,310,1],[940,428,1],[350,324,2],[350,430,2],[350,530,2],[350,636,2],[350,734,2],[350,836,2], /*carDrawWidth*/80 ],
+    [ [950,68,2],[950,161,2],[950,247,2],[950,336,2],[950,421,2],[950,508,2],[950,596,2],[950,682,2],[950,772,2],[950,856,2], /*carDrawWidth*/60 ]
 ];
 let parkingStrs = [ "FMI", "FZF", "FHF" ];
 
@@ -181,7 +181,7 @@ function drawParking() {
         let carPositionX = parkingImgSpots[curParkingIdx][spotNumber][0];
         let carPositionY = parkingImgSpots[curParkingIdx][spotNumber][1];
         let carDrawWidth = parkingImgSpots[curParkingIdx][10];
-        let carImg = carImgs[curParkingIdx]
+        let carImg = carImgs[parkingImgSpots[curParkingIdx][spotNumber][2]];
         carPositionX *= ratioCanvasToImg[0];
         carPositionY *= ratioCanvasToImg[1];
         canvasCtx.drawImage(carImg, carPositionX, carPositionY, carDrawWidth, carDrawWidth * (carImg.height / carImg.width));
