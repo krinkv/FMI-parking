@@ -24,33 +24,29 @@ function addUser() {
     const responseDiv = document.getElementById("response-message-register"); // the div that will contain the error message if the backend returned an error
     responseDiv.classList.remove("success");
     responseDiv.classList.remove("fail");
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // prevent the form from resetting
-
-        // remove styles from last error message
-        responseDiv.classList.remove("error");
-
-        // remove last error message
-        responseDiv.innerHTML = null;
-
-        // gather all the input information
-        let data = {};
-        inputs.forEach(input => {
-            data[input.name] = input.value;
-        })
-        sendFormData(data)
-            .then((responseMessage) => {
-                if (responseMessage["status"] === "ERROR") {
-                    throw new Error(responseMessage["message"]);
-                }
-                else {
-                    showDiv(responseDiv, "Успешна регистрация!", false);
-                }
-            })
-            .catch((errorMsg) => {
-                showDiv(responseDiv, errorMsg, true); // create an error message if the server returned an error
-            })
+    
+    // remove styles from last error message
+    responseDiv.classList.remove("error");
+    // remove last error message
+    responseDiv.innerHTML = null;
+    // gather all the input information
+    let data = {};
+    inputs.forEach(input => {
+        data[input.name] = input.value;
     })
+    console.log(data);
+    sendFormData(data)
+        .then((responseMessage) => {
+            if (responseMessage["status"] === "ERROR") {
+                throw new Error(responseMessage["message"]);
+            }
+            else {
+                showDiv(responseDiv, "Успешна регистрация!", false);
+            }
+        })
+        .catch((errorMsg) => {
+            showDiv(responseDiv, errorMsg, true); // create an error message if the server returned an error
+        })
 };
 
 /* send the inputted data over to the backend and based on the server's response, display an error message or redirect user to his newly created account */
