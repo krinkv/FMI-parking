@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (DatabaseQueries::checkUserByValue('email', $userEmail)){
 
         http_response_code(400);
-        exit(json_encode(["status" => "ERROR", "message" => "Email already taken !"]));
+        exit(json_encode(["status" => "ERROR", "message" => "Имейл адресът вече е регистриран!"]));
 
     } else {
 
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["user"] = $user;
 
         http_response_code(200);
-        exit(json_encode(["status" => "SUCCESS", "message" => "Successfull registration"]));
+        exit(json_encode(["status" => "SUCCESS", "message" => "Успешна регистрация!"]));
     }
 }
 ?>

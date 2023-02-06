@@ -5,7 +5,7 @@ window.addEventListener('load', function() {
 function authenticate() {
     if (document.cookie == null) {
         window.location.replace("../../../login/login.html");
-    }        
+    }
 
     getAuthDetails().then((response) => {
         if (response.role != "ADMIN") {
@@ -22,34 +22,31 @@ function addUser() {
     const form = document.getElementById("registration-form"); // the registration form
     const inputs = document.querySelectorAll("input, select"); // the input fields and the select one
     const responseDiv = document.getElementById("response-message-register"); // the div that will contain the error message if the backend returned an error
-
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // prevent the form from resetting
-
-        // remove styles from last error message
-        responseDiv.classList.remove("error");
-
-        // remove last error message
-        responseDiv.innerHTML = null;
-
-        // gather all the input information
-        let data = {};
-        inputs.forEach(input => {
-            data[input.name] = input.value;
-        })
-        sendFormData(data)
-            .then((responseMessage) => {
-                if (responseMessage["status"] === "ERROR") {
-                    throw new Error(responseMessage["message"]);
-                }
-                else {
-                    // print successfull msg ! important               
-                }
-            })
-            .catch((errorMsg) => {
-                showDiv(responseDiv, errorMsg); // create an error message if the server returned an error
-            })
+    responseDiv.classList.remove("success");
+    responseDiv.classList.remove("fail");
+    
+    // remove styles from last error message
+    responseDiv.classList.remove("error");
+    // remove last error message
+    responseDiv.innerHTML = null;
+    // gather all the input information
+    let data = {};
+    inputs.forEach(input => {
+        data[input.name] = input.value;
     })
+    console.log(data);
+    sendFormData(data)
+        .then((responseMessage) => {
+            if (responseMessage["status"] === "ERROR") {
+                throw new Error(responseMessage["message"]);
+            }
+            else {
+                showDiv(responseDiv, "Успешна регистрация!", false);
+            }
+        })
+        .catch((errorMsg) => {
+            showDiv(responseDiv, errorMsg, true); // create an error message if the server returned an error
+        })
 };
 
 /* send the inputted data over to the backend and based on the server's response, display an error message or redirect user to his newly created account */
@@ -81,18 +78,18 @@ function getAuthDetails() {
     })
 }
 
-function showDiv(div, message) {
+function showDiv(div, message, isError) {
     div.innerHTML = null;
-    // create the image of the error (a white exclamation mark)
-    let statusImage = document.createElement("img");
-
-    // attach image attributes src and alt
-    statusImage.src = "./images/error_response.png";
-    statusImage.alt = "white exclamation mark on red background";
 
     // toggle classes
     div.classList.add("error");
     div.classList.remove("no-show");
+
+    if (isError) {
+        div.classList.add("fail");
+    } else {
+        div.classList.add("success");
+    }
 
     // create error text and append to span element
     let messageContainer = document.createElement("span");
@@ -101,6 +98,5 @@ function showDiv(div, message) {
     messageContainer.appendChild(responseMessage);
 
     // append all created elements to the response div
-    div.appendChild(statusImage);
     div.appendChild(messageContainer);
 }
