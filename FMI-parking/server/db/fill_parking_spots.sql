@@ -1,0 +1,32 @@
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('1', '0', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('2', '1', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('3', '2', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('4', '3', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('5', '4', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('6', '5', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('7', '6', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('8', '7', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('9', '8', 'FMI');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('10', '9', 'FMI');
+
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('11', '0', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('12', '1', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('13', '2', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('14', '3', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('15', '4', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('16', '5', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('17', '6', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('18', '7', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('19', '8', 'FZF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('20', '9', 'FZF');
+
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('21', '0', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('22', '1', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('23', '2', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('24', '3', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('25', '4', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('26', '5', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('27', '6', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('28', '7', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('29', '8', 'FHF');
+INSERT INTO `parking_spot` (`parking_spot_id`, `number`, `sector`) VALUES ('30', '9', 'FHF');

@@ -6,7 +6,7 @@ require_once("../repository/database_queries.php");
 
 $input_data = json_decode(file_get_contents("php://input"), true);
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $taken_spots = DatabaseQueries::getTakenSpotsInTimeRange($input_data["start_time"], $input_data["end_time"]);
 
     http_response_code(200);

@@ -161,11 +161,11 @@ class DatabaseQueries
 
         $takenSpots = DatabaseQueries::getTakenSpotsInTimeRange($startTime, $endTime);
         foreach($takenSpots as $spot) {
-            if ($spot["number"] == $number && $spot["sector"]) {
+            if ($spot["number"] == $number && $spot["sector"] == $sector) {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     public static function getParkingSpotByNumberAndSector($number, $sector)
