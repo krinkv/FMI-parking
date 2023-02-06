@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Style HTML Tables with CSS</title>
+    <link rel="stylesheet" href="css/restricted-users.css">
+    <link rel="stylesheet" href="../admin-sidebar/css/admin-sidebar.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="../restricted-users/javascript/restricted-users.js"></script>
+</head>
+<body>
+    <div id="sidebar-placeholder"></div>
+    <div class="content">
+        <div class="container-content">
+        <table class="content-table">
+            <thead>
+            <tr>
+                <th>Имейл</th>
+                <th>Първо име</th>
+                <th>Фамилно име</th>
+                <th>Блокиран</th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+        <div class="container" id="right-container">
+            <div class="form-container">
+                <form id="login-form">
+                    <h1>Промени статуса</h1>
+                    <input type="email" placeholder="имейл" required name="email" id="email">
+                    <select name="status" id="user-type" class="custom-select">
+                        <option value="FULL_TIME_LECTURER">Щатен преподавател</option>
+                        <option value="CONTRACT_LECTURER">Хоноруван преподавател</option>
+                        <option value="RESTRICTED_ACESS">Блокиран</option>
+                    </select>      
+                    <button type="submit" id="login-button" onclick="changeStatus()">Смени статус</button>
+                    <div class="form-item no-show" id="response-message">
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+</body>
+<script>
+    $(function(){
+        $("#sidebar-placeholder").load("../admin-sidebar/admin-sidebar.html");
+    });
+</script>
+</html>
+

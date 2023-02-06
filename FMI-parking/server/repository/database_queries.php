@@ -250,8 +250,18 @@ class DatabaseQueries
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->execute(); // Think how to handle errors !!!
-        $user = $resultSet->fetch(PDO::FETCH_ASSOC);
+        $user = $resultSet->fetchAll(PDO::FETCH_ASSOC);
 
-        return $res;
+        return $user;
+    }
+
+    public static function updateUserStatus($mail, $status) {
+
+        $sql = "UPDATE user SET status = :st WHERE email = :em;";
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':st', $status);
+        $resultSet->bindParam(':em', $mail);
+        $resultSet->execute();
     }
 }
