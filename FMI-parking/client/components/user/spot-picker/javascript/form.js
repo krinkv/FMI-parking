@@ -14,7 +14,7 @@ function startOfMonth(date) {
 }
 
 window.onload = function loadMonth() {
-    setupCanvas();
+    setupCanvas(fmiImg);
     const DAYS = 7;
     const WEEKS = 5;
     const current = new Date();
@@ -52,6 +52,20 @@ window.onload = function loadMonth() {
   
       tbl.appendChild(row);
     }
+
+    var parkingOption = document.getElementById("parking-option");
+    parkingOption.addEventListener("change", function() {
+        console.log("parking changed");
+        let parkingIdx = parkingOption.value;
+        let img = fmiImg;
+        if (parkingIdx == 2) {
+            img = fzfImg;
+        }
+        else if (parkingIdx == 3) {
+            img = fhfImg;
+        }
+        setupCanvas(img);
+    });
 }
 
 function showCalendar() {
@@ -91,10 +105,10 @@ function showCalendar() {
     });
 }
 
-function setupCanvas() {
+function setupCanvas(img) {
     let canvas = document.querySelector('canvas');
     let canvasCtx = canvas.getContext('2d');
-    canvasCtx.drawImage(fmiImg, 0, 0, canvas.width, canvas.height);
+    canvasCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
 }
 
 function updateCanvas() {
