@@ -22,6 +22,8 @@ body {
 	--gradient2: #FF416C;
 	--responseMessage: #FF4D4D;
 	--responseMessageBox: #FF4D4DB3;
+	--successResponse: #1abc9c;
+	--successResponseBox: #31f2cb;
 	--mainContainerShadow1: #00000040;
 	--mainContainerShadow2: #00000038;
 }
@@ -149,9 +151,17 @@ input, .custom-select {
     margin-top: 1.5rem;
     margin-bottom: 0;
     padding: 1rem;
-    background-color: var(--responseMessage);
-    box-shadow: 0 0 1rem var(--responseMessageBox);
     justify-content: space-evenly;
+}
+
+.fail {
+	background-color: var(--responseMessage);
+    box-shadow: 0 0 1rem var(--responseMessageBox);
+}
+
+.success {
+	background-color: var(--successResponse);
+    box-shadow: 0 0 1rem var(--successResponseBox);
 }
 
 #response-message-register span {
@@ -170,8 +180,6 @@ input, .custom-select {
     width: 70px;
     height: 60px;
 }
-
-
 
 .no-show {
     display: none !important;

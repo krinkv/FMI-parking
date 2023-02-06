@@ -22,7 +22,8 @@ function addUser() {
     const form = document.getElementById("registration-form"); // the registration form
     const inputs = document.querySelectorAll("input, select"); // the input fields and the select one
     const responseDiv = document.getElementById("response-message-register"); // the div that will contain the error message if the backend returned an error
-
+    responseDiv.classList.remove("success");
+    responseDiv.classList.remove("fail");
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // prevent the form from resetting
 
@@ -43,11 +44,11 @@ function addUser() {
                     throw new Error(responseMessage["message"]);
                 }
                 else {
-                    showDiv(responseDiv, "Успешна регистрация!");
+                    showDiv(responseDiv, "Успешна регистрация!", false);
                 }
             })
             .catch((errorMsg) => {
-                showDiv(responseDiv, errorMsg); // create an error message if the server returned an error
+                showDiv(responseDiv, errorMsg, true); // create an error message if the server returned an error
             })
     })
 };
@@ -87,6 +88,12 @@ function showDiv(div, message, isError) {
     // toggle classes
     div.classList.add("error");
     div.classList.remove("no-show");
+
+    if (isError) {
+        div.classList.add("fail");
+    } else {
+        div.classList.add("success");
+    }
 
     // create error text and append to span element
     let messageContainer = document.createElement("span");
