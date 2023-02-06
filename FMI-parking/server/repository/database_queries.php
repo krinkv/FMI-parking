@@ -241,4 +241,17 @@ class DatabaseQueries
 
         return false;
     }
+
+    public static function getAllUsers()
+    {
+        $table = "user";
+        $sql = "SELECT first_name, last_name, email, `status` FROM $table;";
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->execute(); // Think how to handle errors !!!
+        $user = $resultSet->fetch(PDO::FETCH_ASSOC);
+
+        return $res;
+    }
 }
