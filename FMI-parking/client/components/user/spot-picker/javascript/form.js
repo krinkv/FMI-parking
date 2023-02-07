@@ -3,10 +3,29 @@ let parkingImgs = [ new Image(), new Image(), new Image() ];
 parkingImgs[0].src = "./images/fmi.png";
 parkingImgs[1].src = "./images/fzf.png";
 parkingImgs[2].src = "./images/fhf.png";
-let carImgs = [ new Image(), new Image(), new Image() ];
-carImgs[0].src = "./images/car-v-red.png";
-carImgs[1].src = "./images/car-hl-red.png";
-carImgs[2].src = "./images/car-hr-red.png";
+let carImgs = [
+    [new Image(),new Image(),new Image(),new Image(),new Image(),new Image()],
+    [new Image(),new Image(),new Image(),new Image(),new Image(),new Image()],
+    [new Image(),new Image(),new Image(),new Image(),new Image(),new Image()]
+];
+carImgs[0][0].src = "./images/car-v-red.png";
+carImgs[0][1].src = "./images/car-v-blue.png";
+carImgs[0][2].src = "./images/car-v-black.png";
+carImgs[0][3].src = "./images/car-v-green.png";
+carImgs[0][4].src = "./images/car-v-orange.png";
+carImgs[0][5].src = "./images/car-v-cyan.png";
+carImgs[1][0].src = "./images/car-hl-red.png";
+carImgs[1][1].src = "./images/car-hl-blue.png";
+carImgs[1][2].src = "./images/car-hl-black.png";
+carImgs[1][3].src = "./images/car-hl-green.png";
+carImgs[1][4].src = "./images/car-hl-orange.png";
+carImgs[1][5].src = "./images/car-hl-cyan.png";
+carImgs[2][0].src = "./images/car-hr-red.png";
+carImgs[2][1].src = "./images/car-hr-blue.png";
+carImgs[2][2].src = "./images/car-hr-black.png";
+carImgs[2][3].src = "./images/car-hr-green.png";
+carImgs[2][4].src = "./images/car-hr-orange.png";
+carImgs[2][5].src = "./images/car-hr-cyan.png";
 let greenImg = new Image();
 greenImg.src = "./images/green.png";
 // Coordinates of where car images should be positioned inside each parking image to indicate that a particular spot is taken
@@ -189,6 +208,7 @@ function drawParking() {
         (canvas.width / parkingImgs[curParkingIdx].width),
         (canvas.height / parkingImgs[curParkingIdx].height)
     ];
+    let carColIdx = 0;
     takenSpots.forEach((takenSpot) => {
         if (takenSpot["sector"] != parkingStrs[curParkingIdx]) {
             return; // meaning continue in forEach()
@@ -197,7 +217,8 @@ function drawParking() {
         let carPositionX = parkingImgSpots[curParkingIdx][spotNumber][0];
         let carPositionY = parkingImgSpots[curParkingIdx][spotNumber][1];
         let carDrawWidth = parkingImgSpots[curParkingIdx][10];
-        let carImg = carImgs[parkingImgSpots[curParkingIdx][spotNumber][2]];
+        let carImg = carImgs[parkingImgSpots[curParkingIdx][spotNumber][2]][carColIdx];
+        carColIdx = (carColIdx + 1) % carImgs[0].length;
         carPositionX *= ratioCanvasToImg[0];
         carPositionY *= ratioCanvasToImg[1];
         canvasCtx.drawImage(carImg, carPositionX, carPositionY, carDrawWidth, carDrawWidth * (carImg.height / carImg.width));
