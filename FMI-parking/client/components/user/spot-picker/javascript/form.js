@@ -7,6 +7,8 @@ let carImgs = [ new Image(), new Image(), new Image() ];
 carImgs[0].src = "./images/car-v-red.png";
 carImgs[1].src = "./images/car-hl-red.png";
 carImgs[2].src = "./images/car-hr-red.png";
+let greenImg = new Image();
+greenImg.src = "./images/green.png";
 // Coordinates of where car images should be positioned inside each parking image to indicate that a particular spot is taken
 // Example: Spot 6 in sector 1 (FMI parking) is taken means that a car image should be placed on position parkingImgSpots[0][5]
 // TODO: fill with legit data
@@ -16,6 +18,15 @@ let parkingImgSpots = [
     [ [950,68,2],[950,161,2],[950,247,2],[950,336,2],[950,421,2],[950,508,2],[950,596,2],[950,682,2],[950,772,2],[950,856,2], /*carDrawWidth*/60 ]
 ];
 let parkingStrs = [ "FMI", "FZF", "FHF" ];
+
+let freeLigthsSpots = [
+    [ [120,346,106,250],[242,346,106,250],[356,346,106,250],[472,346,106,250],[590,346,106,250],
+        [708,346,106,250],[822,346,106,250],[940,346,106,250],[1055,346,106,250],[1172,346,106,250]],
+    [ [870,63,240,106],[870,185,240,106],[870,305,240,106],[870,426,240,106],[330,324,250,102],
+        [330,430,250,102],[330,530,250,102],[330,634,250,100],[330,734,250,102],[330,836,250,102]],
+    [ [882,62,190,90],[882,154,190,90],[882,240,190,90],[882,329,190,84],[882,412,190,90],
+        [882,500,190,90],[882,588,190,86],[882,676,190,90],[882,766,190,86],[882,848,190,90]]
+]
 
 // Initally taken spots will be empty.
 // If we want them to match the initial/default time interval, we need to call endpoint here
@@ -33,6 +44,7 @@ function startOfMonth(date) {
 
 window.onload = function loadMonth() {
     drawParking();
+
     const DAYS = 7;
     const WEEKS = 5;
     const current = new Date();
@@ -117,14 +129,17 @@ function showCalendar() {
     });
 }
 
-function reserveSpot() {
+function reserveSpot(numberFromMouse = -1) {
     let date = document.getElementById("checkin").value;
     let begin_hour = document.getElementById("begin-hour").value;
     let end_hour = document.getElementById("end-hour").value;
     let start_time = getDateTimeForRequest(date, begin_hour);
     let end_time = getDateTimeForRequest(date, end_hour);
     let parking_option = document.getElementById("parking-option").value;
-    let number = document.getElementById("number-option").value;
+    let number = numberFromMouse;
+    if (number < 0) {
+        number = document.getElementById("number-option").value;
+    }
     let sector = parkingStrs[parking_option - 1];
 
     let reqData = {
@@ -166,13 +181,14 @@ function updateTakenSpots() {
 function drawParking() {
     let canvas = document.querySelector('canvas');
     let canvasCtx = canvas.getContext('2d');
+    canvasCtx.globalAlpha = 1.0;
     canvasCtx.drawImage(parkingImgs[curParkingIdx], 0, 0, canvas.width, canvas.height);
 
     // Put cars on the taken spots
     let ratioCanvasToImg = [
         (canvas.width / parkingImgs[curParkingIdx].width),
         (canvas.height / parkingImgs[curParkingIdx].height)
-    ]
+    ];
     takenSpots.forEach((takenSpot) => {
         if (takenSpot["sector"] != parkingStrs[curParkingIdx]) {
             return; // meaning continue in forEach()
@@ -251,4 +267,87 @@ function reserveSpotRequest(data) {
     .then((data) => {
         return data;
     })
+}
+
+window.addEventListener('mousemove', followMouseMove, false);
+window.addEventListener('click', followMouseClick, false);
+
+function isSpotTaken(sector, number) {
+    for (let i = 0; i < takenSpots.length; i++) {
+        if (takenSpots[i]["sector"] == sector && takenSpots[i]["number"] == number) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function followMouseMove(e) {
+    drawParking();
+
+    let canvas = document.querySelector('canvas');
+    let canvasCtx = canvas.getContext('2d');
+    canvasCtx.globalAlpha = 0.3;
+
+    let ratioCanvasToImg = [
+        (canvas.width / parkingImgs[curParkingIdx].width),
+        (canvas.height / parkingImgs[curParkingIdx].height)
+    ];
+
+    let pos = getMousePos(canvas, e);
+
+    for (let i = 0; i < freeLigthsSpots[curParkingIdx].length; i++) {
+        let lightSpot = freeLigthsSpots[curParkingIdx][i];
+        let lightLeft = lightSpot[0] * ratioCanvasToImg[0];
+        let lightTop = lightSpot[1] * ratioCanvasToImg[1];
+        let lightWidth = lightSpot[2] * ratioCanvasToImg[0];
+        let lightHeight = lightSpot[3] * ratioCanvasToImg[1];
+        if (pos[0] >= lightLeft && pos[1] >= lightTop
+            && pos[0] < lightLeft + lightWidth && pos[1] < lightTop + lightHeight
+            && !isSpotTaken(parkingStrs[curParkingIdx], i)
+        ) {
+            canvasCtx.drawImage(
+                greenImg, lightLeft, lightTop, lightWidth, lightHeight
+            );
+            break;
+        }
+    }
+}
+
+function followMouseClick(e) {
+    if (document.querySelector(".calendar").style.display == "block") {
+        return;
+    }
+    console.log("followMouseClick()");
+    let canvas = document.querySelector('canvas');
+    let canvasCtx = canvas.getContext('2d');
+
+    let ratioCanvasToImg = [
+        (canvas.width / parkingImgs[curParkingIdx].width),
+        (canvas.height / parkingImgs[curParkingIdx].height)
+    ];
+
+    let pos = getMousePos(canvas, e);
+
+    for (let i = 0; i < freeLigthsSpots[curParkingIdx].length; i++) {
+        let lightSpot = freeLigthsSpots[curParkingIdx][i];
+        let lightLeft = lightSpot[0] * ratioCanvasToImg[0];
+        let lightTop = lightSpot[1] * ratioCanvasToImg[1];
+        let lightWidth = lightSpot[2] * ratioCanvasToImg[0];
+        let lightHeight = lightSpot[3] * ratioCanvasToImg[1];
+        if (pos[0] >= lightLeft && pos[1] >= lightTop
+            && pos[0] < lightLeft + lightWidth && pos[1] < lightTop + lightHeight
+            && !isSpotTaken(parkingStrs[curParkingIdx], i)
+        ) {
+            reserveSpot(i);
+            break;
+        }
+    }
+}
+
+function getMousePos(canvas, evt) {
+    let rect = canvas.getBoundingClientRect();
+    return [
+        (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+        (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+    ];
 }
