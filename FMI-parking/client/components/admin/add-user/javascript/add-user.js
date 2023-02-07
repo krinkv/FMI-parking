@@ -1,17 +1,14 @@
 
 function addUser() {
 
-    const form = document.getElementById("registration-form"); // the registration form
     const inputs = document.querySelectorAll("input, select"); // the input fields and the select one
-    const responseDiv = document.getElementById("response-message-register"); // the div that will contain the error message if the backend returned an error
-    responseDiv.classList.remove("success");
-    responseDiv.classList.remove("fail");
+    //const responseDiv = document.getElementById("response-message-register"); // the div that will contain the error message if the backend returned an error
     
     // remove styles from last error message
-    responseDiv.classList.remove("error");
+    //responseDiv.classList.remove("error");
     // remove last error message
-    responseDiv.innerHTML = null;
-    // gather all the input information
+    //responseDiv.innerHTML = null;
+    //// gather all the input information
     let data = {};
     inputs.forEach(input => {
         data[input.name] = input.value;
@@ -23,11 +20,12 @@ function addUser() {
                 throw new Error(responseMessage["message"]);
             }
             else {
-                showDiv(responseDiv, "Успешна регистрация!", false);
+                console.log("success");
+                // showDiv(responseDiv, "Успешна регистрация!", false);
             }
         })
         .catch((errorMsg) => {
-            showDiv(responseDiv, errorMsg, true); // create an error message if the server returned an error
+            console.log(errorMsg); // create an error message if the server returned an error
         })
 };
 

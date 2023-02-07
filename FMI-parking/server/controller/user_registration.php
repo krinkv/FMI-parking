@@ -34,9 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         DatabaseQueries::saveUser($user); // validation
 
-        session_start();
-        $_SESSION["user"] = $user;
-
         http_response_code(200);
         exit(json_encode(["status" => "SUCCESS", "message" => "Успешна регистрация!"]));
     }
